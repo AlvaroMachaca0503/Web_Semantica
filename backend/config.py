@@ -22,7 +22,8 @@ FLASK_CONFIG = {
 }
 
 # CORS
-CORS_ORIGINS = ["http://localhost:5173", "http://localhost:3000"]
+# CORS
+CORS_ORIGINS = ["*"]
 
 # Namespace de la ontología
 ONTOLOGY_IRI = "http://smartcompare.com/ontologia#"

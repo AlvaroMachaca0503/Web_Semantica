@@ -1,5 +1,19 @@
+# FastAPI Backend - SmartCompareMarket
+# Web Semántica + Ontologías OWL + SWRL
+
+# === Framework Web ===
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.6.0
+python-multipart==0.0.6
+
+# === Ontología y Web Semántica ===
 owlready2==0.46
-flask==3.0.0
-flask-cors==4.0.0
 rdflib==7.0.0
+
+# === Testing ===
 pytest==7.4.3
+httpx==0.25.2
+
+# === Utilities ===
+python-dotenv==1.0.0
