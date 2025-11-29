@@ -1,0 +1,5 @@
+"""
+Backend de SmartCompareMarket
+"""
+
+
