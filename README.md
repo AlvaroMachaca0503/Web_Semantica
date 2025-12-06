@@ -136,10 +136,7 @@ curl http://localhost:5000/api/v1/products | grep -A 10 "Laptop_Dell_XPS"
 # En "types" debe aparecer "LaptopGamer" si RAM >= 16GB
 ```
 
-**Screenshots sugeridos**:
-- JSON mostrando 3 laptops gaming detectadas
-- JSON mostrando tipos de producto incluyendo "LaptopGamer"
-- Vista en Protégé de las reglas SWRL
+
 
 ---
 
@@ -193,10 +190,6 @@ curl -X POST http://localhost:5000/api/v1/compare \
 # - reason: Razón de victoria
 ```
 
-**Screenshots sugeridos**:
-- Vista de frontend con tabla comparativa
-- JSON de respuesta mostrando winner y scores
-- Sección de reglas SWRL aplicadas
 
 ---
 
@@ -240,10 +233,7 @@ curl "http://localhost:5000/api/v1/search?category=Laptop&min_ram=16"
 curl "http://localhost:5000/api/v1/search?text=Dell&min_price=1000&category=Laptop"
 ```
 
-**Screenshots sugeridos**:
-- Vista de filtros en frontend
-- Resultados de búsqueda filtrada
-- JSON de respuesta SPARQL
+
 
 ---
 
@@ -305,10 +295,7 @@ curl -X POST http://localhost:5000/api/v1/recommendations \
 # - Porcentaje de match
 ```
 
-**Screenshots sugeridos**:
-- Panel de preferencias en frontend
-- Lista de recomendaciones con scores
-- JSON mostrando razones de recomendación
+
 
 ---
 
@@ -408,10 +395,7 @@ curl http://localhost:5000/api/v1/swrl/gaming-laptops
 # Debe retornar 3 laptops con RAM >= 16GB
 ```
 
-**Screenshots sugeridos**:
-- JSON mostrando producto con tipo "LaptopGamer"
-- Vista de reglas SWRL en Protégé
-- Badge de gaming en frontend
+
 
 ---
 
@@ -469,10 +453,6 @@ curl http://localhost:5000/api/v1/validate/all
 # - with_warnings: Z productos con advertencias
 ```
 
-**Screenshots sugeridos**:
-- JSON de validación exitosa
-- JSON de validación con errores
-- Resumen de validación masiva
 
 ---
 
