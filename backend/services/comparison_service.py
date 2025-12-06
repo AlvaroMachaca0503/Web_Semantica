@@ -113,102 +113,241 @@ class ComparisonService:
         all_product_ids: List[str]
     ) -> float:
         """
-        Calcula un score para el producto basado en múltiples factores.
+        Calcula un score para el producto basado en pesos configurables.
+        Score final normalizado a 0-100.
         
-        Scoring:
-        - Precio: menor es mejor (normalizado)
-        - RAM: mayor es mejor
-        - Calificación: mayor es mejor
-        - Relaciones SWRL: bonus si es mejor opción que otros
+        Pesos corregidos (suman 1.0):
+        - bateria: 20% (mayor es mejor) - MUY IMPORTANTE
+        - calificacion: 18% (mayor es mejor) - MUY IMPORTANTE
+        - precio: 14% (menor es mejor) - importante pero no dominante
+        - resolucion: 10% (mayor es mejor)
+        - ram: 10% (mayor es mejor)
+        - almacenamiento: 10% (mayor es mejor)
+        - garantia: 7% (mayor es mejor)
+        - pantalla: 6% (mayor es mejor)
+        - peso_fisico: 5% (menor es mejor)
+        
+        Normalización:
+        - Mayor = mejor: score = valor_producto / valor_referencia_max
+        - Menor = mejor: score = valor_referencia_min / valor_producto
         """
-        score = 0.0
+        import json
+        
+        # Cargar configuración de pesos
+        try:
+            weights_path = Path(__file__).parent.parent / "data" / "comparison_weights.json"
+            with open(weights_path, "r", encoding="utf-8") as f:
+                config = json.load(f)
+        except Exception:
+            config = {
+                "weights": {
+                    "bateria": 0.20, "calificacion": 0.18, "precio": 0.14,
+                    "resolucion": 0.10, "ram": 0.10, "almacenamiento": 0.10,
+                    "garantia": 0.07, "pantalla": 0.06, "peso_fisico": 0.05
+                }
+            }
+        
         props = product.get('properties', {})
+        weights = config.get("weights", {})
         
-        # Factor 1: Precio (menor es mejor)
-        price = self._get_numeric_value(props.get('tienePrecio', 0))
-        if price > 0:
-            # Invertir: menor precio = mayor score
-            score += (1000 / price) * 10  # Normalizado
+        # Mapeo de factores a propiedades de la ontología
+        prop_map = {
+            "pantalla": "tienePulgadas",
+            "bateria": "bateriaCapacidad_mAh",
+            "ram": "tieneRAM_GB",
+            "almacenamiento": "tieneAlmacenamiento_GB",
+            "precio": "tienePrecio",
+            "garantia": "garantiaMeses",
+            "calificacion": "tieneCalificacion",
+            "peso_fisico": "pesoGramos"
+        }
         
-        # Factor 2: RAM (mayor es mejor)
-        ram = self._get_numeric_value(props.get('tieneRAM_GB', 0))
-        score += ram * 5
+        # Valores de referencia para normalización (realistas para smartphones/electronics)
+        # Mayor es mejor: usamos valor_max como referencia (100% = alcanzar el max)
+        # Menor es mejor: usamos valor_min como referencia (100% = alcanzar el min)
+        reference_max = {
+            "pantalla": 7.0,        # 7 pulgadas es excelente para smartphone
+            "bateria": 5500,        # 5500 mAh es excelente
+            "ram": 16,              # 16 GB es excelente para móvil
+            "almacenamiento": 512,  # 512 GB es excelente
+            "garantia": 24,         # 24 meses es excelente
+            "calificacion": 5.0,    # 5.0 es perfecta
+        }
         
-        # Factor 3: Almacenamiento (mayor es mejor)
-        storage = self._get_numeric_value(props.get('tieneAlmacenamiento_GB', 0))
-        score += storage * 0.1
+        reference_min = {
+            "precio": 600,          # $600 es un buen precio base
+            "peso_fisico": 170,     # 170g es muy ligero
+        }
         
-        # Factor 4: Calificación (mayor es mejor)
-        rating = self._get_numeric_value(props.get('tieneCalificacion', 0))
-        score += rating * 15
+        # Factores donde menor es mejor
+        lower_better = {"precio", "peso_fisico"}
         
-        # Factor 5: Bonus por SWRL esMejorOpcionQue
-        for other_id in all_product_ids:
-            if other_id != product_id:
-                is_better = self.inference_engine.is_better_option(product_id, other_id)
-                if is_better:
-                    score += 50  # Bonus significativo
+        total_score = 0.0
+        total_weight = 0.0
+        score_breakdown = {}
         
-        return round(score, 2)
+        for factor, weight in weights.items():
+            if factor == "resolucion":
+                continue  # Se calcula aparte
+                
+            prop_name = prop_map.get(factor)
+            if not prop_name:
+                continue
+                
+            value = self._get_numeric_value(props.get(prop_name, 0))
+            
+            if value <= 0:
+                # Propiedad faltante = 0 puntos para este factor
+                factor_score = 0
+            elif factor in lower_better:
+                # MENOR ES MEJOR: score = referencia_min / valor_actual
+                # Si valor = referencia_min -> score = 1.0 (100%)
+                # Si valor > referencia_min -> score < 1.0 (penalizado)
+                ref_min = reference_min.get(factor, value)
+                factor_score = min(1.0, ref_min / value)
+            else:
+                # MAYOR ES MEJOR: score = valor_actual / referencia_max
+                # Si valor = referencia_max -> score = 1.0 (100%)
+                # Si valor < referencia_max -> score < 1.0 (penalizado)
+                ref_max = reference_max.get(factor, 100)
+                factor_score = min(1.0, value / ref_max)
+            
+            # Agregar al total (factor_score está en rango 0-1)
+            total_score += factor_score * weight
+            total_weight += weight
+            score_breakdown[factor] = round(factor_score * 100, 1)
+        
+        # Calcular resolución (especial porque es string "3200x1440")
+        resolution_weight = weights.get("resolucion", 0.10)
+        resolution_str = props.get("resolucionPantalla", "")
+        if resolution_str and "x" in str(resolution_str):
+            try:
+                parts = str(resolution_str).lower().split("x")
+                res_pixels = int(parts[0]) * int(parts[1])
+                # Referencia: QHD+ (3200x1440 = 4.6M pixels) = 100%
+                ref_resolution = 4608000  # 3200 * 1440
+                res_score = min(1.0, res_pixels / ref_resolution)
+                total_score += res_score * resolution_weight
+                total_weight += resolution_weight
+                score_breakdown["resolucion"] = round(res_score * 100, 1)
+            except Exception:
+                pass
+        
+        # Bonus SWRL: esMejorOpcionQue (pequeño bonus por inferencias semánticas)
+        swrl_bonus = 0
+        try:
+            for other_id in all_product_ids:
+                if other_id != product_id:
+                    is_better = self.inference_engine.is_better_option(product_id, other_id)
+                    if is_better:
+                        swrl_bonus += 2  # +2 puntos por cada producto que supera
+        except Exception:
+            pass
+        
+        # Score final: normalizar a 0-100 y agregar bonus SWRL
+        if total_weight > 0:
+            # El score base está en rango 0-1, multiplicamos por 100
+            final_score = (total_score / total_weight) * 100 + swrl_bonus
+        else:
+            final_score = swrl_bonus
+        
+        return round(min(100, max(0, final_score)), 1)
     
     def _generate_comparison_table(self, products: List[Dict]) -> Dict[str, List]:
         """
-        Genera tabla comparativa con propiedades lado a lado.
+        Genera una tabla comparativa con todas las propiedades de los productos.
+        
+        Returns:
+            Dict donde cada key es una propiedad y value es lista de valores por producto
         """
-        # Obtener todas las propiedades únicas
-        all_properties = set()
+        table = {}
+        
+        # Propiedades principales a comparar (en orden de importancia)
+        main_props = [
+            'tieneNombre',
+            'tienePrecio',
+            'tieneRAM_GB',
+            'tieneAlmacenamiento_GB',
+            'tieneCalificacion',
+            'tienePulgadas',
+            'procesadorModelo',
+            'bateriaCapacidad_mAh',
+            'garantiaMeses',
+            'tieneDescuento',
+            'tieneMarca',
+            'vendidoPor',
+            'tieneSistemaOperativo'
+        ]
+        
+        # Recopilar todas las propiedades únicas
+        all_props = set()
         for product in products:
-            all_properties.update(product.get('properties', {}).keys())
+            props = product.get('properties', {})
+            all_props.update(props.keys())
+        
+        # Ordenar: primero las principales, luego el resto
+        ordered_props = [p for p in main_props if p in all_props]
+        remaining = sorted([p for p in all_props if p not in main_props])
+        ordered_props.extend(remaining)
         
         # Construir tabla
-        table = {}
-        for prop in sorted(all_properties):
+        for prop in ordered_props:
             values = []
             for product in products:
-                raw_val = product.get('properties', {}).get(prop, 'N/A')
-                
-                # Desempaquetar lista si es necesario
-                if isinstance(raw_val, list):
-                    val = raw_val[0] if raw_val else 'N/A'
-                else:
-                    val = raw_val
-                    
-                values.append(val)
+                value = product.get('properties', {}).get(prop, 'N/A')
+                # Manejar listas
+                if isinstance(value, list):
+                    value = value[0] if value else 'N/A'
+                values.append(value)
             table[prop] = values
         
         return table
-    
+
     def _check_swrl_relations(self, product_ids: List[str]) -> Dict[str, Any]:
         """
         Verifica relaciones SWRL entre los productos.
         """
         relations = {
             "esMejorOpcionQue": [],
+            "tieneMejorRAMQue": [],
+            "tieneMejorAlmacenamientoQue": [],
+            "tieneMejorPantallaQue": [],
+            "esEquivalenteTecnico": [],
             "rules_applied": []
         }
         
-        # Verificar esMejorOpcionQue entre cada par
-        for i, product1_id in enumerate(product_ids):
-            for product2_id in product_ids[i+1:]:
-                result = self.inference_engine.is_better_option(product1_id, product2_id)
-                
-                if result is True:
-                    relations["esMejorOpcionQue"].append({
-                        "better": product1_id,
-                        "worse": product2_id,
-                        "rule": "EncontrarMejorPrecio"
-                    })
-                    if "EncontrarMejorPrecio" not in relations["rules_applied"]:
-                        relations["rules_applied"].append("EncontrarMejorPrecio")
-                        
-                elif result is False:
-                    relations["esMejorOpcionQue"].append({
-                        "better": product2_id,
-                        "worse": product1_id,
-                        "rule": "EncontrarMejorPrecio"
-                    })
-                    if "EncontrarMejorPrecio" not in relations["rules_applied"]:
-                        relations["rules_applied"].append("EncontrarMejorPrecio")
+        # Mapeo de propiedades SWRL a nombres amigables
+        swrl_props = [
+            ("esMejorOpcionQue", "EncontrarMejorPrecio"),
+            ("tieneMejorRAMQue", "CompararRAM"),
+            ("tieneMejorAlmacenamientoQue", "CompararAlmacenamiento"),
+            ("tieneMejorPantallaQue", "CompararPantalla"),
+            ("esEquivalenteTecnico", "DetectarEquivalentesTecnicos")
+        ]
+        
+        for i, p1_id in enumerate(product_ids):
+            for p2_id in product_ids[i+1:]:
+                # Verificar cada propiedad SWRL
+                for prop, rule_name in swrl_props:
+                    # Verificar p1 -> p2
+                    if self.inference_engine.check_object_property(p1_id, prop, p2_id):
+                        relations[prop].append({
+                            "source": p1_id,
+                            "target": p2_id,
+                            "rule": rule_name
+                        })
+                        if rule_name not in relations["rules_applied"]:
+                            relations["rules_applied"].append(rule_name)
+                            
+                    # Verificar p2 -> p1 (si aplica, algunas son simétricas)
+                    if self.inference_engine.check_object_property(p2_id, prop, p1_id):
+                        relations[prop].append({
+                            "source": p2_id,
+                            "target": p1_id,
+                            "rule": rule_name
+                        })
+                        if rule_name not in relations["rules_applied"]:
+                            relations["rules_applied"].append(rule_name)
         
         return relations
     
@@ -285,12 +424,12 @@ class ComparisonService:
         # Verificar si ganó por SWRL
         swrl_wins = [
             r for r in swrl_relations.get("esMejorOpcionQue", [])
-            if r["better"] == winner_id
+            if r.get("source") == winner_id
         ]
         
         if swrl_wins:
             reasons.append(
-                f"Inferido por SWRL como mejor opción (regla: {swrl_wins[0]['rule']})"
+                f"Inferido por SWRL como mejor opción (regla: {swrl_wins[0].get('rule', 'SWRL')})"
             )
         
         # Verificar precio

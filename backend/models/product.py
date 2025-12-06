@@ -23,7 +23,11 @@ class ProductResponse(BaseModel):
                     "tieneRAM_GB": 8,
                     "tieneAlmacenamiento_GB": 256,
                     "tieneCalificacion": 4.5,
-                    "vendidoPor": "Vend_JuanPerez"
+                    "vendidoPor": "Vend_JuanPerez",
+                    "tieneDescuento": 10.0,
+                    "procesadorModelo": "A17 Pro",
+                    "resolucionPantalla": "2556x1179",
+                    "pesoGramos": 187
                 }
             }
         }
@@ -51,6 +55,12 @@ class ProductListResponse(BaseModel):
             }
         }
     )
+
+
+class SingleProductResponse(BaseModel):
+    """Respuesta de un solo producto"""
+    success: bool = True
+    data: ProductResponse = Field(..., description="Datos del producto")
 
 
 class ProductRelation(BaseModel):

@@ -1,0 +1,1126 @@
+\documentclass{article}
+\usepackage[top=3cm, bottom=3cm, outer=3cm, inner=3cm]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{natbib}
+\usepackage{multirow}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{caption}
+\usepackage{float}
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INFORMACIÓN DEL DOCUMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\itemCourse}{Web Semántica y Ontologías}
+\newcommand{\itemUniversity}{Universidad La Salle}
+\newcommand{\itemFaculty}{Facultad de Ingeniería}
+\newcommand{\itemSchool}{Carrera Profesional de Ingeniería de Software}
+\newcommand{\itemAcademic}{2024 - II}
+\newcommand{\itemDate}{Diciembre 2024}
+\newcommand{\itemVersion}{1.0}
+\newcommand{\itemProfesor}{Ing. Marco Antonio Camacho Alatrista}
+\newcommand{\itemProjectName}{SmartCompareMarket}
+\newcommand{\itemProjectNumber}{Proyecto 16 - Nivel 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONFIGURACIÓN DE IDIOMA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english,spanish]{babel}
+\usepackage[utf8]{inputenc}
+\AtBeginDocument{\selectlanguage{spanish}}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\refname}{Referencias}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\contentsname}{Índice de Contenidos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ESTILO DE PÁGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{40pt}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\fancyhead[L]{\raisebox{-0.2\height}{\includegraphics[width=3cm]{logo_salle.png}}}
+\fancyhead[C]{\fontsize{7}{7}\selectfont	\itemUniversity \\ \itemFaculty \\ \itemSchool \\ \textbf{\itemCourse}}
+\fancyfoot[C]{Página \thepage}
+\fancyfoot[R]{\itemProjectName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ESTILO DE CÓDIGO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{codebackground}{rgb}{0.95, 0.95, 0.92}
+\definecolor{tablebackground}{rgb}{0.0, 0.45, 0.63}
+\definecolor{successgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{warningorange}{rgb}{0.85, 0.55, 0.0}
+
+\lstset{
+	frame=tb,
+	language=bash,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	backgroundcolor=\color{codebackground},
+	literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INICIO DEL DOCUMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PORTADA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+	\centering
+	\vspace*{1cm}
+	
+	\includegraphics[width=4cm]{logo_salle.png}
+	\vspace{1cm}
+	
+	{\Huge\bfseries MANUAL DE USUARIO\par}
+	\vspace{0.5cm}
+	{\LARGE\bfseries \itemProjectName\par}
+	\vspace{0.3cm}
+	{\Large Marketplace Semántico con Comparación Inteligente\par}
+	\vspace{1cm}
+	
+	{\Large\textbf{\itemProjectNumber}\par}
+	\vspace{0.3cm}
+	{\large Proyecto Final - \itemCourse\par}
+	\vspace{0.5cm}
+	{\large Versión \itemVersion\par}
+	\vspace{1.5cm}
+	
+	{\large\itemUniversity\par}
+	{\large\itemFaculty\par}
+	{\large\itemSchool\par}
+	\vspace{1cm}
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|x{4cm}|x{10cm}|}
+			\hline 
+			\rowcolor{tablebackground}
+			\color{white}\textbf{Docente} & \color{white}\textbf{\itemProfesor} \\
+			\hline 
+		\end{tabular}
+	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|x{7cm}|x{7cm}|}
+			\hline 
+			\rowcolor{tablebackground}
+			\color{white}\textbf{Estudiante} & \color{white}\textbf{Correo Electrónico} \\
+			\hline 
+			Álvaro André Machaca Meléndez & amachacam@ulasalle.edu.pe \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\vspace{1cm}
+	{\large\itemDate\par}
+	{\large Ciclo Académico: \itemAcademic\par}
+	
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLA DE CONTENIDOS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONTENIDO DEL MANUAL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introducción}
+
+\subsection{¿Qué es SmartCompareMarket?}
+
+\textbf{SmartCompareMarket} es una plataforma web inteligente para comparar y recibir recomendaciones de productos electrónicos (Laptops, Smartphones, Tablets). A diferencia de los comparadores tradicionales, este sistema utiliza tecnologías de \textbf{Web Semántica} e \textbf{Inteligencia Artificial} para:
+
+\begin{itemize}
+	\item \textbf{Entender} las características de los productos mediante ontologías OWL 2
+	\item \textbf{Clasificar automáticamente} productos usando reglas SWRL (ej: detectar si una laptop es ``Gamer'')
+	\item \textbf{Comparar inteligentemente} productos con un motor de scoring multi-factor
+	\item \textbf{Recomendar} productos personalizados según las preferencias del usuario
+	\item \textbf{Validar} que las especificaciones de productos sean consistentes
+	\item \textbf{Buscar} productos usando consultas SPARQL semánticas
+\end{itemize}
+
+\subsection{Características Principales}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|p{10cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Característica} & \color{white}\textbf{Descripción} \\
+		\hline
+		🧠 Razonamiento Automático & Clasifica productos automáticamente (LaptopGamer si RAM $\geq$ 16GB) \\
+		\hline
+		🔍 Comparación Inteligente & Motor que calcula scores basados en 9 factores y reglas SWRL \\
+		\hline
+		📊 Consultas SPARQL & Búsqueda semántica con filtros avanzados \\
+		\hline
+		🎯 Recomendaciones & Sistema basado en perfil de usuario y razonamiento \\
+		\hline
+		✅ Validación & Detecta errores e inconsistencias en especificaciones \\
+		\hline
+		🔗 Relaciones & Detecta compatibilidad, incompatibilidad y equivalencias \\
+		\hline
+	\end{tabular}
+	\caption{Características principales del sistema}
+\end{table}
+
+\subsection{¿Para quién es este manual?}
+
+Este manual está diseñado para \textbf{usuarios finales} que desean:
+
+\begin{itemize}
+	\item Instalar y ejecutar el sistema en su computadora
+	\item Usar la plataforma para comparar productos
+	\item Obtener recomendaciones personalizadas
+\end{itemize}
+
+\textbf{Nota:} No se requieren conocimientos técnicos avanzados. Las instrucciones están escritas paso a paso.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Requisitos del Sistema}
+
+\subsection{Requisitos de Hardware}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Componente} & \color{white}\textbf{Mínimo} & \color{white}\textbf{Recomendado} \\
+		\hline
+		Procesador & Dual Core 2.0 GHz & Quad Core 2.5+ GHz \\
+		\hline
+		Memoria RAM & 4 GB & 8 GB o más \\
+		\hline
+		Espacio en Disco & 2 GB libres & 5 GB libres \\
+		\hline
+		Conexión Internet & Requerida (instalación) & Requerida \\
+		\hline
+	\end{tabular}
+	\caption{Requisitos de hardware del sistema}
+\end{table}
+
+\subsection{Requisitos de Software}
+
+Antes de comenzar, debes tener instalados los siguientes programas:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Software} & \color{white}\textbf{Versión} & \color{white}\textbf{Comando de Verificación} \\
+		\hline
+		Python & 3.11 o superior & \texttt{python --version} \\
+		\hline
+		Node.js & 18.0 o superior & \texttt{node --version} \\
+		\hline
+		npm & 9.0 o superior & \texttt{npm --version} \\
+		\hline
+		Java JDK & 11 o superior & \texttt{java -version} \\
+		\hline
+		Git (opcional) & Cualquiera & \texttt{git --version} \\
+		\hline
+	\end{tabular}
+	\caption{Software necesario y comandos de verificación}
+\end{table}
+
+\textbf{⚠️ IMPORTANTE:} Java es necesario para el razonador semántico Pellet.
+
+\subsection{Navegadores Compatibles}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Navegador} & \color{white}\textbf{Versión} & \color{white}\textbf{Estado} \\
+		\hline
+		Google Chrome & 90+ & ✅ Recomendado \\
+		\hline
+		Mozilla Firefox & 88+ & ✅ Compatible \\
+		\hline
+		Microsoft Edge & 90+ & ✅ Compatible \\
+		\hline
+		Safari & 14+ & ✅ Compatible \\
+		\hline
+	\end{tabular}
+	\caption{Navegadores compatibles}
+\end{table}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Instalación Paso a Paso}
+
+\subsection{Paso 1: Verificar Prerrequisitos}
+
+Abre una \textbf{terminal/consola de comandos} y ejecuta estos comandos uno por uno:
+
+\begin{lstlisting}
+python --version
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando Python 3.11.x o superior}
+    \label{fig:python_version}
+\end{figure}
+
+\begin{lstlisting}
+node --version
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando v18.x.x o superior}
+    \label{fig:node_version}
+\end{figure}
+
+\begin{lstlisting}
+npm --version
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando 9.x.x o superior}
+    \label{fig:npm_version}
+\end{figure}
+
+\begin{lstlisting}
+java -version
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando openjdk version 11.x.x o similar}
+    \label{fig:java_version}
+\end{figure}
+
+\subsection{Paso 2: Descargar el Proyecto}
+
+\subsubsection{Opción A: Usando Git (Recomendado)}
+
+\begin{lstlisting}
+git clone https://github.com/AlvaroMachaca0503/Web_Semantica.git
+cd Web_Semantica
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando el proceso de clonación del repositorio}
+    \label{fig:git_clone}
+\end{figure}
+
+\subsubsection{Opción B: Descarga Manual}
+
+\begin{enumerate}
+	\item Ve a la página del repositorio en GitHub
+	\item Haz clic en el botón verde \textbf{``Code''}
+	\item Selecciona \textbf{``Download ZIP''}
+	\item Extrae el archivo ZIP en una carpeta de tu elección
+	\item Abre una terminal en esa carpeta
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Carpeta del proyecto mostrando las subcarpetas backend y frontend}
+    \label{fig:folder_structure}
+\end{figure}
+
+\subsection{Paso 3: Instalar Dependencias del Backend}
+
+\begin{enumerate}
+	\item Navega a la carpeta del backend:
+	
+\begin{lstlisting}
+cd backend
+\end{lstlisting}
+
+	\item Crea un entorno virtual de Python:
+	
+	\textbf{En Windows:}
+\begin{lstlisting}
+python -m venv venv
+venv\Scripts\activate
+\end{lstlisting}
+
+	\textbf{En Mac/Linux:}
+\begin{lstlisting}
+python3 -m venv venv
+source venv/bin/activate
+\end{lstlisting}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando (venv) al inicio}
+    \label{fig:venv_active}
+\end{figure}
+
+\begin{enumerate}
+	\setcounter{enumi}{2}
+	\item Instala las dependencias:
+	
+\begin{lstlisting}
+pip install -r requirements.txt
+\end{lstlisting}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando dependencias instaladas exitosamente}
+    \label{fig:pip_install}
+\end{figure}
+
+\subsection{Paso 4: Instalar Dependencias del Frontend}
+
+\begin{enumerate}
+	\item Abre \textbf{otra terminal} (mantén la del backend abierta)
+	\item Navega a la carpeta del frontend:
+	
+\begin{lstlisting}
+cd frontend
+\end{lstlisting}
+
+	\item Instala las dependencias:
+	
+\begin{lstlisting}
+npm install
+\end{lstlisting}
+\end{enumerate}
+
+\textbf{Nota:} Este proceso puede tardar 2-5 minutos dependiendo de tu conexión.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando paquetes de Node.js instalados}
+    \label{fig:npm_install}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Ejecución del Proyecto}
+
+\subsection{Iniciar el Backend (Servidor API)}
+
+\begin{enumerate}
+	\item Asegúrate de estar en la carpeta \texttt{backend} con el entorno virtual activado
+	\item Ejecuta:
+	
+\begin{lstlisting}
+python main.py
+\end{lstlisting}
+
+	\item \textbf{Espera} hasta ver estos mensajes de éxito:
+\end{enumerate}
+
+\begin{lstlisting}
+[OK] Ontologia cargada: 60+ productos
+[OK] Razonador Pellet ejecutado exitosamente
+[OK] Reglas SWRL aplicadas
+INFO:     Uvicorn running on http://0.0.0.0:5000
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando inicio exitoso del backend}
+    \label{fig:backend_start}
+\end{figure}
+
+\textbf{⚠️ ¡NO CIERRES ESTA TERMINAL!} El servidor debe permanecer ejecutándose.
+
+\subsection{Iniciar el Frontend (Interfaz Web)}
+
+\begin{enumerate}
+	\item En la \textbf{segunda terminal}, asegúrate de estar en la carpeta \texttt{frontend}
+	\item Ejecuta:
+	
+\begin{lstlisting}
+npm run dev
+\end{lstlisting}
+
+	\item Espera hasta ver:
+\end{enumerate}
+
+\begin{lstlisting}
+  VITE v5.x.x  ready in XXX ms
+
+  ->  Local:   http://localhost:5173/
+  ->  Network: use --host to expose
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando Vite ejecutándose}
+    \label{fig:frontend_vite}
+\end{figure}
+
+\subsection{Abrir la Aplicación}
+
+\begin{enumerate}
+	\item Abre tu \textbf{navegador web} (Chrome recomendado)
+	\item Escribe en la barra de direcciones: \texttt{http://localhost:5173}
+	\item Presiona \textbf{Enter}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Página principal del sistema mostrando el catálogo de productos}
+    \label{fig:home_page}
+\end{figure}
+
+\subsection{URLs Importantes}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Servicio} & \color{white}\textbf{URL} \\
+		\hline
+		Frontend (Interfaz) & http://localhost:5173 \\
+		\hline
+		Backend (API) & http://localhost:5000 \\
+		\hline
+		Documentación API (Swagger) & http://localhost:5000/docs \\
+		\hline
+	\end{tabular}
+	\caption{URLs principales del sistema}
+\end{table}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Guía de Uso del Sistema}
+
+\subsection{Navegación Principal}
+
+La aplicación tiene \textbf{tres secciones principales} accesibles desde el menú superior:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|p{8cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Sección} & \color{white}\textbf{Icono} & \color{white}\textbf{Descripción} \\
+		\hline
+		Inicio & 🏠 & Catálogo completo de productos \\
+		\hline
+		Comparar & ⚖️ & Comparación inteligente de productos \\
+		\hline
+		Recomendaciones & 💡 & Recomendaciones personalizadas \\
+		\hline
+	\end{tabular}
+	\caption{Secciones principales de navegación}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Menú de navegación superior mostrando las tres opciones}
+    \label{fig:nav_menu}
+\end{figure}
+
+\subsection{Explorar el Catálogo de Productos}
+
+En la \textbf{página de Inicio}, verás tarjetas de productos. Cada tarjeta muestra:
+
+\begin{itemize}
+	\item 📷 Imagen del producto
+	\item 🏷️ Nombre y marca
+	\item 💵 Precio (con descuento si aplica)
+	\item ⭐ Calificación de usuarios
+	\item 🖥️ Especificaciones técnicas (RAM, Almacenamiento, etc.)
+	\item 🎮 Badges especiales (ej: ``Laptop Gamer'')
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Tarjeta de producto mostrando nombre, precio, especificaciones y badge}
+    \label{fig:product_card}
+\end{figure}
+
+\subsubsection{Usando los Filtros de Búsqueda}
+
+\begin{enumerate}
+	\item Usa la \textbf{barra de búsqueda} para buscar por nombre
+	\item Puedes seleccionar entre \textbf{2 y 5 productos}
+	\item Verás una \textbf{barra flotante} en la parte inferior indicando cuántos has seleccionado
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Tres tarjetas de productos con una seleccionada}
+    \label{fig:selected_cards}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Barra flotante inferior de comparación}
+    \label{fig:compare_bar}
+\end{figure}
+
+\subsubsection{Paso 2: Ir a la página de comparación}
+
+Haz clic en el botón \textbf{``Comparar''} de la barra flotante.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Página de comparación mostrando la tabla comparativa}
+    \label{fig:compare_page}
+\end{figure}
+
+\subsubsection{Paso 3: Analizar los resultados}
+
+La página de comparación muestra:
+
+\textbf{A. Ganador Global (parte superior)}
+\begin{itemize}
+	\item El sistema determina automáticamente el \textbf{mejor producto}
+	\item Muestra el \textbf{score numérico} (0-100 puntos)
+	\item Explica la \textbf{razón} de por qué ganó
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Sección del Ganador con nombre, score y razón}
+    \label{fig:winner_section}
+\end{figure}
+
+\textbf{B. Tabla Comparativa (centro)}
+\begin{itemize}
+	\item Cada columna es un producto
+	\item Cada fila es una característica (Precio, RAM, Batería, etc.)
+	\item Los valores \textbf{en verde} son los mejores de cada fila
+	\item Los valores \textbf{en amarillo} indican empate
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Tabla comparativa con celdas resaltadas}
+    \label{fig:compare_table}
+\end{figure}
+
+\textbf{C. Inferencias SWRL (parte inferior)}
+\begin{itemize}
+	\item Muestra las \textbf{reglas inteligentes} aplicadas
+	\item Ejemplos: ``🎮 LaptopGamer detectado'', ``💰 Es mejor opción que ProductoX''
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Sección Reglas SWRL Aplicadas mostrando inferencias}
+    \label{fig:swrl_inferences}
+\end{figure}
+
+\newpage
+
+\subsection{Obtener Recomendaciones Personalizadas}
+
+\subsubsection{Paso 1: Ir a Recomendaciones}
+
+Haz clic en \textbf{``Recomendaciones''} en el menú superior.
+
+\subsubsection{Paso 2: Configurar preferencias}
+
+En el \textbf{panel izquierdo}, ajusta:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|p{6cm}|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Preferencia} & \color{white}\textbf{Descripción} & \color{white}\textbf{Ejemplo} \\
+		\hline
+		💵 Presupuesto máximo & Cuánto puedes gastar & \$1500 \\
+		\hline
+		📁 Categoría preferida & Tipo de producto & Laptop \\
+		\hline
+		🧠 RAM mínima & Memoria RAM mínima & 16 GB \\
+		\hline
+		💾 Almacenamiento mínimo & Disco duro mínimo & 512 GB \\
+		\hline
+		⭐ Calificación mínima & Puntuación de usuarios & 4.0 \\
+		\hline
+	\end{tabular}
+	\caption{Opciones de preferencias del usuario}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Panel de preferencias con sliders y selectores configurados}
+    \label{fig:preferences_panel}
+\end{figure}
+
+\subsubsection{Paso 3: Ver las recomendaciones}
+
+El \textbf{panel derecho} mostrará:
+
+\begin{enumerate}
+	\item Lista de productos ordenados por \textbf{relevancia}
+	\item Para cada producto:
+	\begin{itemize}
+		\item \textbf{Score de match} (0-100\%)
+		\item \textbf{Razón} de la recomendación
+		\item Especificaciones principales
+	\end{itemize}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Lista de recomendaciones con scores y razones}
+    \label{fig:recommendations_list}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Sistema de Comparación Inteligente}
+
+\subsection{Algoritmo de Scoring}
+
+El motor de comparación evalúa productos usando \textbf{9 factores ponderados}:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|c|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Factor} & \color{white}\textbf{Peso} & \color{white}\textbf{Criterio} \\
+		\hline
+		🔋 Batería & 20\% & Mayor es mejor \\
+		\hline
+		⭐ Calificación & 18\% & Mayor es mejor \\
+		\hline
+		💵 Precio & 14\% & \textbf{Menor es mejor} \\
+		\hline
+		📺 Resolución & 10\% & Mayor es mejor \\
+		\hline
+		🧠 RAM & 10\% & Mayor es mejor \\
+		\hline
+		💾 Almacenamiento & 10\% & Mayor es mejor \\
+		\hline
+		🛡️ Garantía & 7\% & Mayor es mejor \\
+		\hline
+		📐 Pantalla & 6\% & Mayor es mejor \\
+		\hline
+		⚖️ Peso & 5\% & \textbf{Menor es mejor} \\
+		\hline
+	\end{tabular}
+	\caption{Factores de scoring y sus pesos}
+\end{table}
+
+\textbf{Bonus por reglas SWRL:}
+\begin{itemize}
+	\item +2 puntos si el producto ``es mejor opción que'' otro
+	\item +10 puntos si es detectado como ``Laptop Gamer''
+\end{itemize}
+
+\subsection{Clasificación Automática (SWRL)}
+
+El sistema clasifica productos automáticamente usando reglas inteligentes:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Regla} & \color{white}\textbf{Condición} & \color{white}\textbf{Clasificación} \\
+		\hline
+		DetectarGamer & Laptop con RAM $\geq$ 16GB & → LaptopGamer 🎮 \\
+		\hline
+		EncontrarMejorPrecio & Mismo producto, menor precio & → esMejorOpcionQue \\
+		\hline
+		ClasificarPositivas & Reseña con calificación $\geq$ 4 & → Reseña\_Positiva \\
+		\hline
+		ClasificarNegativas & Reseña con calificación $\leq$ 2 & → Reseña\_Negativa \\
+		\hline
+	\end{tabular}
+	\caption{Reglas SWRL implementadas}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Producto mostrando el badge Laptop Gamer clasificado automáticamente}
+    \label{fig:gamer_badge}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solución de Problemas Comunes}
+
+\subsection{Error: ``python no se reconoce como comando''}
+
+\textbf{Problema:} Python no está instalado o no está en el PATH.
+
+\textbf{Solución:}
+\begin{enumerate}
+	\item Descarga Python desde: \url{https://www.python.org/downloads/}
+	\item Durante la instalación, \textbf{marca la casilla ``Add Python to PATH''}
+	\item Reinicia la terminal
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Instalador de Python con casilla Add Python to PATH marcada}
+    \label{fig:python_installer}
+\end{figure}
+
+\subsection{Error: ``npm no se reconoce como comando''}
+
+\textbf{Problema:} Node.js no está instalado.
+
+\textbf{Solución:}
+\begin{enumerate}
+	\item Descarga Node.js desde: \url{https://nodejs.org/}
+	\item Elige la versión \textbf{LTS} (recomendada)
+	\item Instala y reinicia la terminal
+\end{enumerate}
+
+\subsection{Error: ``No se puede conectar al servidor'' en el frontend}
+
+\textbf{Problema:} El backend no está ejecutándose.
+
+\textbf{Solución:}
+\begin{enumerate}
+	\item Verifica que la terminal del backend muestre:
+	\begin{lstlisting}
+INFO: Uvicorn running on http://0.0.0.0:5000
+	\end{lstlisting}
+	\item Si no, vuelve a ejecutar \texttt{python main.py}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal del backend ejecutándose correctamente}
+    \label{fig:backend_running}
+\end{figure}
+
+\subsection{Error: ``Error loading ontology''}
+
+\textbf{Problema:} Java no está instalado (necesario para Pellet).
+
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Navegador mostrando JSON de productos}
+    \label{fig:json_browser}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Preguntas Frecuentes (FAQ)}
+
+\subsection{¿Qué significa ``Inferencia SWRL''?}
+
+Son \textbf{reglas lógicas programadas} en la ontología. Por ejemplo: \textit{``Si una Laptop tiene RAM $\geq$ 16GB, entonces se clasifica como LaptopGamer''}. El sistema aplica estas reglas automáticamente.
+
+\subsection{¿Cómo se decide el ``Ganador'' en una comparación?}
+
+El sistema calcula un \textbf{score de 0 a 100} considerando:
+\begin{enumerate}
+	\item Los 9 factores técnicos (ver Tabla 6)
+	\item Bonus por reglas SWRL aplicadas
+	\item Relación calidad-precio
+\end{enumerate}
+
+El producto con el score más alto gana.
+
+\subsection{¿Por qué algunos productos tienen el badge ``Laptop Gamer''?}
+
+El sistema detectó automáticamente que tienen \textbf{RAM de 16GB o más}, lo cual es típico de laptops para gaming según las reglas SWRL.
+
+\subsection{¿Necesito Java si el sistema es Python?}
+
+Sí. El razonador \textbf{Pellet} que ejecuta las reglas SWRL está escrito en Java. La librería Owlready2 lo necesita para el razonamiento semántico.
+
+\subsection{¿Necesito Internet para usar el sistema?}
+
+\begin{itemize}
+	\item \textbf{Para instalar:} Sí, para descargar dependencias
+	\item \textbf{Para usar:} No, funciona localmente una vez instalado
+\end{itemize}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Lista de Capturas de Pantalla}
+
+Para completar este manual, se deben incluir las siguientes capturas de pantalla:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{\#} & \color{white}\textbf{Descripción de la Captura} \\
+		\hline
+		1 & Terminal mostrando \texttt{python --version} \\
+		\hline
+		2 & Terminal mostrando \texttt{node --version} \\
+		\hline
+		3 & Terminal mostrando \texttt{npm --version} \\
+		\hline
+		4 & Terminal mostrando \texttt{java -version} \\
+		\hline
+		5 & Terminal mostrando proceso de clonación del repositorio \\
+		\hline
+		6 & Carpeta del proyecto con subcarpetas backend y frontend \\
+		\hline
+		7 & Terminal con \texttt{(venv)} activado \\
+		\hline
+		8 & Instalación pip completada exitosamente \\
+		\hline
+		9 & npm install completado \\
+		\hline
+		10 & Backend ejecutándose con Pellet OK \\
+		\hline
+		11 & Frontend con Vite ejecutándose \\
+		\hline
+		12 & Página principal del sistema \\
+		\hline
+		13 & Menú de navegación \\
+		\hline
+		14 & Tarjeta de producto con badge Laptop Gamer \\
+		\hline
+		15 & Panel de filtros de búsqueda \\
+		\hline
+		16 & Productos seleccionados para comparar \\
+		\hline
+		17 & Barra flotante de comparación \\
+		\hline
+		18 & Página de comparación completa \\
+		\hline
+		19 & Sección del ganador \\
+		\hline
+		20 & Tabla comparativa con valores resaltados \\
+		\hline
+		21 & Sección de reglas SWRL aplicadas \\
+		\hline
+		22 & Panel de preferencias de recomendaciones \\
+		\hline
+		23 & Lista de recomendaciones con scores \\
+		\hline
+		24 & Producto con badge Laptop Gamer \\
+		\hline
+		25 & Instalador Python con Add to PATH \\
+		\hline
+		26 & Backend ejecutándose correctamente \\
+		\hline
+		27 & JSON de productos en navegador \\
+		\hline
+	\end{tabular}
+	\caption{Lista de capturas de pantalla requeridas}
+\end{table}
+
+\textbf{Total de capturas requeridas: 27}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusiones}
+
+Este manual ha cubierto todos los aspectos necesarios para instalar, configurar, ejecutar y utilizar \textbf{SmartCompareMarket}. Los principales logros del proyecto incluyen:
+
+\begin{itemize}
+	\item \textbf{Ontología OWL 2 compleja:} 48 clases, 30+ propiedades, 60+ individuos
+	\item \textbf{Reglas SWRL funcionales:} Clasificación automática de productos
+	\item \textbf{Motor de comparación inteligente:} Scoring multi-factor + inferencias
+	\item \textbf{Búsqueda semántica:} Consultas SPARQL con filtros avanzados
+	\item \textbf{Recomendaciones personalizadas:} Basadas en perfil y razonamiento
+	\item \textbf{Validación de consistencia:} Detección de errores en especificaciones
+	\item \textbf{Frontend moderno:} React + TypeScript + Tailwind CSS
+	\item \textbf{Backend robusto:} FastAPI + Pellet + Owlready2
+\end{itemize}
+
+\subsection{Tecnologías Utilizadas}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Componente} & \color{white}\textbf{Tecnología} \\
+		\hline
+		Backend & Python 3.11 + FastAPI + Uvicorn \\
+		\hline
+		Ontología & OWL 2 + SWRL + Pellet \\
+		\hline
+		Consultas & SPARQL + RDFlib \\
+		\hline
+		Frontend & React 18 + TypeScript + Vite \\
+		\hline
+		Estilos & Tailwind CSS + Shadcn/UI \\
+		\hline
+	\end{tabular}
+	\caption{Stack tecnológico del proyecto}
+\end{table}
+
+\vspace{1cm}
+
+\begin{center}
+	\textit{Gracias por utilizar SmartCompareMarket.}
+	
+	\textit{¡Éxito en tu experiencia de comparación inteligente!}
+\end{center}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Información del Proyecto}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{5cm}|p{9cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Campo} & \color{white}\textbf{Información} \\
+		\hline
+		Universidad & \itemUniversity \\
+		\hline
+		Facultad & \itemFaculty \\
+		\hline
+		Carrera & \itemSchool \\
+		\hline
+		Curso & \itemCourse \\
+		\hline
+		Docente & \itemProfesor \\
+		\hline
+		Ciclo Académico & \itemAcademic \\
+		\hline
+		Fecha & \itemDate \\
+		\hline
+		Proyecto & \itemProjectNumber \\
+		\hline
+		Nombre del Sistema & \itemProjectName \\
+		\hline
+		Versión del Manual & \itemVersion \\
+		\hline
+	\end{tabular}
+	\caption{Información académica del proyecto}
+\end{table}
+
+\subsection{Autor}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Nombre} & \color{white}\textbf{Correo Electrónico} \\
+		\hline
+		Álvaro André Machaca Meléndez & amachacam@ulasalle.edu.pe \\
+		\hline
+	\end{tabular}
+	\caption{Autor del proyecto}
+\end{table}
+
+\subsection{Repositorio}
+
+\begin{itemize}
+	\item \textbf{GitHub:} \url{https://github.com/AlvaroMachaca0503/Web_Semantica}
+\end{itemize}
+
+\subsection{Historial de Versiones}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|p{8cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Versión} & \color{white}\textbf{Fecha} & \color{white}\textbf{Cambios} \\
+		\hline
+		1.0 & Diciembre 2024 & Versión inicial del manual de usuario \\
+		\hline
+	\end{tabular}
+	\caption{Control de versiones del manual}
+\end{table}
+
+\end{document}

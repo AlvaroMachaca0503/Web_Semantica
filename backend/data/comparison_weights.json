@@ -1,0 +1,46 @@
+{
+    "weights": {
+        "ram": 0.10,
+        "pantalla": 0.06,
+        "precio": 0.14,
+        "peso_fisico": 0.05,
+        "garantia": 0.07,
+        "calificacion": 0.18,
+        "resolucion": 0.10,
+        "almacenamiento": 0.10,
+        "bateria": 0.20
+    },
+    "property_mapping": {
+        "pantalla": "tienePulgadas",
+        "bateria": "bateriaCapacidad_mAh",
+        "resolucion": "resolucionPantalla",
+        "ram": "tieneRAM_GB",
+        "almacenamiento": "tieneAlmacenamiento_GB",
+        "precio": "tienePrecio",
+        "garantia": "garantiaMeses",
+        "calificacion": "tieneCalificacion",
+        "peso_fisico": "pesoGramos"
+    },
+    "optimization": {
+        "pantalla": "higher_better",
+        "bateria": "higher_better",
+        "resolucion": "higher_better",
+        "ram": "higher_better",
+        "almacenamiento": "higher_better",
+        "precio": "lower_better",
+        "garantia": "higher_better",
+        "calificacion": "higher_better",
+        "peso_fisico": "lower_better"
+    },
+    "reference_values": {
+        "pantalla_max": 7.0,
+        "bateria_max": 6000,
+        "resolucion_max": 8294400,
+        "ram_max": 32,
+        "almacenamiento_max": 1024,
+        "precio_min": 500,
+        "garantia_max": 36,
+        "calificacion_max": 5.0,
+        "peso_fisico_min": 150
+    }
+}

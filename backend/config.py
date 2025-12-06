@@ -8,7 +8,7 @@ ONTOLOGY_FILE = ONTOLOGY_DIR / "SmartCompareMarket.owl"
 
 # Configuración del razonador
 REASONER_CONFIG = {
-    "name": "HermiT",
+    "name": "Pellet",
     "infer_property_values": True,
     "infer_data_property_values": True,
     "debug": False

@@ -14,14 +14,22 @@ def get_individual_properties(individual):
                 try:
                     values = getattr(individual, prop.python_name, None)
                     if values is not None:
-                        # Si es lista con un solo elemento, extraer el valor
-                        if isinstance(values, list):
-                            if len(values) == 1:
-                                props[prop.python_name] = values[0]
-                            elif len(values) > 1:
-                                props[prop.python_name] = values
-                        else:
-                            props[prop.python_name] = values
+                        # Convertir valores a tipos nativos de Python
+                        processed_values = []
+                        raw_values = values if isinstance(values, list) else [values]
+                        
+                        for v in raw_values:
+                            # Convertir Decimal a float para JSON serialization
+                            if hasattr(v, 'to_eng_string'): # Check for Decimal-like objects
+                                processed_values.append(float(v))
+                            else:
+                                processed_values.append(v)
+                        
+                        # Asignar al diccionario
+                        if len(processed_values) == 1:
+                            props[prop.python_name] = processed_values[0]
+                        elif len(processed_values) > 1:
+                            props[prop.python_name] = processed_values
                 except:
                     pass
         
@@ -39,20 +47,67 @@ def get_individual_properties(individual):
                     pass
     except Exception as e:
         # Si hay error, intentar obtener propiedades básicas
+        print(f"Error extracting properties for {individual.name}: {e}")
         pass
     
     return props
 
 def get_individual_classes(individual):
     """Obtiene todas las clases (directas e inferidas) de un individuo"""
-    return [cls.name for cls in individual.is_a]
+    classes = set()
+
+    # Obtener clases directas
+    for cls in individual.is_a:
+        if hasattr(cls, 'name'):
+            classes.add(cls.name)
+
+    # Obtener clases inferidas usando INDIRECT_is_a (incluye herencia y razonamiento)
+    try:
+        for cls in individual.INDIRECT_is_a:
+            if hasattr(cls, 'name') and cls.name != 'Thing':
+                classes.add(cls.name)
+    except:
+        pass
+
+    return list(classes)
+
+def apply_swrl_rules_to_types(individual, base_types, properties):
+    """
+    Aplica reglas SWRL manualmente para agregar tipos inferidos.
+
+    Dado que ni HermiT ni Pellet ejecutan reglas SWRL automáticamente en Owlready2,
+    esta función implementa las reglas manualmente para garantizar el comportamiento esperado.
+
+    Reglas implementadas:
+    1. DetectarGamer: Laptop con RAM >= 16GB -> LaptopGamer
+    """
+    types = base_types.copy()
+
+    # Regla 1: DetectarGamer (RAM >= 16GB -> LaptopGamer)
+    if "Laptop" in types:
+        ram = properties.get("tieneRAM_GB", 0)
+        if isinstance(ram, (int, float)) and ram >= 16:
+            if "LaptopGamer" not in types:
+                types.append("LaptopGamer")
+
+    return types
 
 def individual_to_dict(individual):
-    """Convierte un individuo OWL a diccionario JSON-serializable"""
+    """Convierte un individuo OWL a diccionario JSON-serializable
+
+    Usa el razonador Pellet para inferencias OWL básicas (taxonomía, propiedades),
+    pero aplica reglas SWRL manualmente ya que Pellet no las ejecuta automáticamente.
+    """
+    base_types = get_individual_classes(individual)
+    properties = get_individual_properties(individual)
+
+    # Aplicar reglas SWRL manualmente (Pellet no las ejecuta)
+    final_types = apply_swrl_rules_to_types(individual, base_types, properties)
+
     return {
         "id": individual.name,
-        "types": get_individual_classes(individual),
-        "properties": get_individual_properties(individual)
+        "types": final_types,
+        "properties": properties
     }
 
 def search_individuals_by_class(onto, class_name):

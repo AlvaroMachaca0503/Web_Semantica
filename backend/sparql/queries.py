@@ -30,9 +30,9 @@ class SPARQLQueries:
         try:
             # Convertir ontología a RDFlib Graph
             self.graph = self.onto.world.as_rdflib_graph()
-            print(f"✅ Ontología cargada en RDFlib: {len(self.graph)} triples")
+            print(f"[OK] Ontologia cargada en RDFlib: {len(self.graph)} triples")
         except Exception as e:
-            print(f"⚠️ Error cargando grafo RDF: {e}")
+            print(f"[WARNING] Error cargando grafo RDF: {e}")
             # Fallback: crear grafo vacío
             self.graph = Graph()
     

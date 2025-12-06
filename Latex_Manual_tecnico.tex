@@ -1,0 +1,1566 @@
+\documentclass{article}
+\usepackage[top=3cm, bottom=3cm, outer=3cm, inner=3cm]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{natbib}
+\usepackage{multirow}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{longtable}
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INFORMACIÓN DEL DOCUMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\itemCourse}{Web Semántica y Ontologías}
+\newcommand{\itemUniversity}{Universidad La Salle}
+\newcommand{\itemFaculty}{Facultad de Ingeniería}
+\newcommand{\itemSchool}{Carrera Profesional de Ingeniería de Software}
+\newcommand{\itemAcademic}{2024 - II}
+\newcommand{\itemDate}{Diciembre 2024}
+\newcommand{\itemVersion}{1.0}
+\newcommand{\itemProfesor}{Ing. Marco Antonio Camacho Alatrista}
+\newcommand{\itemProjectName}{SmartCompareMarket}
+\newcommand{\itemProjectNumber}{Proyecto 16 - Nivel 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONFIGURACIÓN DE IDIOMA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[english,spanish]{babel}
+\usepackage[utf8]{inputenc}
+\AtBeginDocument{\selectlanguage{spanish}}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\refname}{Referencias}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\contentsname}{Índice de Contenidos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ESTILO DE PÁGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{40pt}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\fancyhead[L]{\raisebox{-0.2\height}{\includegraphics[width=3cm]{logo_salle.png}}}
+\fancyhead[C]{\fontsize{7}{7}\selectfont	\itemUniversity \\ \itemFaculty \\ \itemSchool \\ \textbf{\itemCourse}}
+\fancyfoot[C]{Página \thepage}
+\fancyfoot[R]{\itemProjectName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ESTILO DE CÓDIGO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{codebackground}{rgb}{0.95, 0.95, 0.92}
+\definecolor{tablebackground}{rgb}{0.0, 0.45, 0.63}
+\definecolor{successgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{warningorange}{rgb}{0.85, 0.55, 0.0}
+
+\lstset{
+	frame=tb,
+	language=bash,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	backgroundcolor=\color{codebackground},
+	literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1,
+}
+
+\lstdefinestyle{python}{
+	language=Python,
+	keywordstyle=\color{blue},
+	stringstyle=\color{mauve},
+	commentstyle=\color{dkgreen},
+}
+
+\lstdefinestyle{sparql}{
+	language=SQL,
+	keywordstyle=\color{blue},
+	stringstyle=\color{mauve},
+	morekeywords={PREFIX, SELECT, WHERE, FILTER, OPTIONAL},
+}
+
+\lstdefinestyle{json}{
+	basicstyle={\small\ttfamily},
+	stringstyle=\color{dkgreen},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INICIO DEL DOCUMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PORTADA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+	\centering
+	\vspace*{1cm}
+	
+	\includegraphics[width=4cm]{logo_salle.png}
+	\vspace{1cm}
+	
+	{\Huge\bfseries MANUAL TÉCNICO\par}
+	\vspace{0.5cm}
+	{\LARGE\bfseries \itemProjectName\par}
+	\vspace{0.3cm}
+	{\Large Marketplace Semántico con Comparación Inteligente\par}
+	\vspace{1cm}
+	
+	{\Large\textbf{\itemProjectNumber}\par}
+	\vspace{0.3cm}
+	{\large Proyecto Final - \itemCourse\par}
+	\vspace{0.5cm}
+	{\large Versión \itemVersion\par}
+	\vspace{1.5cm}
+	
+	{\large\itemUniversity\par}
+	{\large\itemFaculty\par}
+	{\large\itemSchool\par}
+	\vspace{1cm}
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|x{4cm}|x{10cm}|}
+			\hline 
+			\rowcolor{tablebackground}
+			\color{white}\textbf{Docente} & \color{white}\textbf{\itemProfesor} \\
+			\hline 
+		\end{tabular}
+	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|x{7cm}|x{7cm}|}
+			\hline 
+			\rowcolor{tablebackground}
+			\color{white}\textbf{Estudiante} & \color{white}\textbf{Correo Electrónico} \\
+			\hline 
+			Álvaro André Machaca Meléndez & amachacam@ulasalle.edu.pe \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\vspace{1cm}
+	{\large\itemDate\par}
+	{\large Ciclo Académico: \itemAcademic\par}
+	
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLA DE CONTENIDOS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONTENIDO DEL MANUAL TÉCNICO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Descripción General del Sistema}
+
+\subsection{Propósito}
+
+\textbf{SmartCompareMarket} es un sistema de marketplace que implementa tecnologías de \textbf{Web Semántica} para proporcionar:
+
+\begin{itemize}
+	\item Comparación inteligente de productos electrónicos
+	\item Clasificación automática mediante razonamiento OWL
+	\item Recomendaciones personalizadas basadas en ontologías
+	\item Búsquedas semánticas con SPARQL
+	\item Validación de consistencia de datos
+\end{itemize}
+
+\subsection{Alcance Técnico}
+
+El sistema implementa los siguientes requisitos funcionales del \textbf{Proyecto 16 - Nivel 2}:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|p{8cm}|c|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Req.} & \color{white}\textbf{Descripción} & \color{white}\textbf{Estado} \\
+		\hline
+		RF1 & Ontología de productos con jerarquías complejas & [OK] 100\% \\
+		\hline
+		RF2 & Modelado de equivalencias semánticas & [PENDING] 70\% \\
+		\hline
+		RF3 & Reglas de inferencia para compatibilidades & [OK] 100\% \\
+		\hline
+		RF4 & Motor de comparación con razonamiento & [OK] 100\% \\
+		\hline
+		RF5 & Búsqueda con filtros semánticos (SPARQL) & [OK] 100\% \\
+		\hline
+		RF6 & Recomendaciones basadas en perfil de usuario & [OK] 100\% \\
+		\hline
+		RF7 & Consultas SPARQL para análisis de mercado & [PENDING] 60\% \\
+		\hline
+		RF8 & Clasificación automática (subsunción OWL) & [PENDING] 75\% \\
+		\hline
+		RF9 & Validación de consistencia de especificaciones & [OK] 100\% \\
+		\hline
+	\end{tabular}
+	\caption{Cumplimiento de requisitos funcionales}
+\end{table}
+
+\textbf{Total: 8.5 de 9 requisitos completamente funcionales (94\%)}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Arquitectura del Sistema}
+
+\subsection{Diagrama de Arquitectura}
+
+El sistema implementa una arquitectura de \textbf{5 capas}:
+
+\begin{verbatim}
++---------------------------------------------------------------+
+|                    CAPA DE PRESENTACIÓN                        |
+|  Frontend: React 18 + TypeScript + Vite + Tailwind CSS        |
+|  Páginas: HomePage, ComparePage, RecommendationsPage          |
++----------------------------+----------------------------------+
+                             | HTTP/REST (JSON) Puerto 5173->5000
++----------------------------v----------------------------------+
+|                        CAPA DE API                             |
+|  Backend: FastAPI + Uvicorn + Pydantic                        |
+|  Routers: products, compare, recommendations, search, swrl    |
++----------------------------+----------------------------------+
+                             |
++----------------------------v----------------------------------+
+|                    CAPA DE SERVICIOS                           |
+|  ProductService | ComparisonService | RecommendationService   |
+|  ValidationService | SPARQLQueries                            |
++----------------------------+----------------------------------+
+                             |
++----------------------------v----------------------------------+
+|                  CAPA DE RAZONAMIENTO                          |
+|  InferenceEngine | SWRLEngine | OntologyLoader                |
+|  Owlready2 + RDFlib + Pellet                                  |
++----------------------------+----------------------------------+
+                             |
++----------------------------v----------------------------------+
+|                     CAPA DE DATOS                              |
+|  Ontología OWL 2: SmartCompareMarket.owl (2900+ líneas)       |
+|  48 clases | 30+ propiedades | 60+ individuos | 4 reglas SWRL |
++---------------------------------------------------------------+
+\end{verbatim}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Diagrama de arquitectura del sistema}
+    \label{fig:arch_diagram}
+\end{figure}
+
+\subsection{Flujo de Datos}
+
+\begin{verbatim}
+[Usuario] -> [React Frontend] -> [HTTP Request] -> [FastAPI Router]
+                                                         |
+                                                [Service Layer]
+                                                         |
+                                  [InferenceEngine / SPARQLQueries]
+                                                         |
+                                    [Owlready2 + Pellet Reasoner]
+                                                         |
+                                       [SmartCompareMarket.owl]
+                                                         |
+                                                [JSON Response]
+                                                         |
+                                           [React State Update]
+                                                         |
+                                                 [UI Renderizado]
+\end{verbatim}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Tecnologías Utilizadas}
+
+\subsection{Stack del Backend}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|p{6cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Tecnología} & \color{white}\textbf{Versión} & \color{white}\textbf{Propósito} \\
+		\hline
+		Python & 3.11+ & Lenguaje principal \\
+		\hline
+		FastAPI & 0.109.0 & Framework web REST \\
+		\hline
+		Uvicorn & 0.27.0 & Servidor ASGI \\
+		\hline
+		Pydantic & 2.6.0 & Validación de datos \\
+		\hline
+		Owlready2 & 0.46 & Manipulación de ontologías OWL \\
+		\hline
+		RDFlib & 7.0.0 & Motor SPARQL \\
+		\hline
+		Pellet & 2.4+ & Razonador OWL+SWRL (requiere Java) \\
+		\hline
+	\end{tabular}
+	\caption{Stack tecnológico del backend}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Archivo requirements.txt mostrando las dependencias}
+    \label{fig:requirements}
+\end{figure}
+
+\subsection{Stack del Frontend}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|p{6cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Tecnología} & \color{white}\textbf{Versión} & \color{white}\textbf{Propósito} \\
+		\hline
+		React & 18.3.1 & Framework UI \\
+		\hline
+		TypeScript & 5.8.3 & Tipado estático \\
+		\hline
+		Vite & 5.4.19 & Build tool y dev server \\
+		\hline
+		Tailwind CSS & 3.4.17 & Framework CSS \\
+		\hline
+		Shadcn/UI & latest & Componentes UI \\
+		\hline
+		React Router & 6.30.1 & Enrutamiento SPA \\
+		\hline
+		Axios & 1.13.2 & Cliente HTTP \\
+		\hline
+		Lucide React & 0.462.0 & Iconografía \\
+		\hline
+	\end{tabular}
+	\caption{Stack tecnológico del frontend}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Archivo package.json mostrando las dependencias}
+    \label{fig:packagejson}
+\end{figure}
+
+\subsection{Tecnologías Semánticas}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|p{10cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Tecnología} & \color{white}\textbf{Descripción} \\
+		\hline
+		OWL 2 & Web Ontology Language 2 para modelar conocimiento \\
+		\hline
+		SWRL & Semantic Web Rule Language para reglas de inferencia \\
+		\hline
+		SPARQL & Lenguaje de consultas para RDF/OWL \\
+		\hline
+		Pellet & Razonador que soporta OWL 2 + SWRL \\
+		\hline
+	\end{tabular}
+	\caption{Tecnologías de Web Semántica}
+\end{table}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Estructura del Proyecto}
+
+\subsection{Estructura de Directorios}
+
+\begin{verbatim}
+WebsemanticaProyect/
+|-- backend/                          # Servidor API
+|   |-- api/                          # Configuracion de la API
+|   |-- data/                         # Datos de configuracion
+|   |   |-- comparison_weights.json   # Pesos para scoring
+|   |-- models/                       # Modelos Pydantic
+|   |   |-- product.py                # Modelo de Producto
+|   |   |-- comparison.py             # Modelo de Comparacion
+|   |   |-- recommendation.py         # Modelo de Recomendacion
+|   |-- ontology/                     # Archivos de ontologia
+|   |   |-- SmartCompareMarket.owl    # ONTOLOGIA PRINCIPAL (2900+ lineas)
+|   |   |-- owl_helpers.py            # Utilidades para OWL
+|   |-- reasoning/                    # Capa de razonamiento
+|   |   |-- inference_engine.py       # Motor de inferencias
+|   |   |-- swrl_engine.py            # Motor de reglas SWRL
+|   |   |-- ontology_loader.py        # Cargador de ontologia
+|   |-- routers/                      # Endpoints de la API
+|   |   |-- products.py               # /api/v1/products
+|   |   |-- compare.py                # /api/v1/compare
+|   |   |-- recommendations.py        # /api/v1/recommendations
+|   |   |-- search.py                 # /api/v1/search
+|   |   |-- swrl.py                   # /api/v1/swrl
+|   |   |-- validation.py             # /api/v1/validate
+|   |-- services/                     # Logica de negocio
+|   |   |-- product_service.py        
+|   |   |-- comparison_service.py     # Motor de comparacion (445 lineas)
+|   |   |-- recommendation_service.py # Sistema de recomendaciones
+|   |   |-- validation_service.py     # Validacion de datos
+|   |-- sparql/                       # Consultas SPARQL
+|   |   |-- queries.py                # Consultas predefinidas
+|   |-- main.py                       # PUNTO DE ENTRADA
+|   |-- requirements.txt              # Dependencias Python
+|
+|-- frontend/                         # Aplicacion React
+|   |-- src/
+|   |   |-- components/               # Componentes reutilizables
+|   |   |-- pages/                    # Paginas principales
+|   |   |   |-- HomePage.tsx          # Catalogo de productos
+|   |   |   |-- ComparePage.tsx       # Comparacion inteligente
+|   |   |   |-- RecommendationsPage.tsx # Recomendaciones
+|   |   |-- services/                 # Servicios HTTP
+|   |   |-- App.tsx                   # Componente raiz
+|   |-- package.json                  # Dependencias Node.js
+|
+|-- README.md                         # Documentacion principal
+|-- MANUAL_USUARIO.md                 # Manual de usuario
+|-- MANUAL_TECNICO.md                 # Manual tecnico
+\end{verbatim}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Estructura de carpetas del proyecto en explorador de archivos}
+    \label{fig:folder_structure}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Ontología OWL 2}
+
+\subsection{Características Generales}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Propiedad} & \color{white}\textbf{Valor} \\
+		\hline
+		Archivo & \texttt{backend/ontology/SmartCompareMarket.owl} \\
+		\hline
+		Tamaño & $\sim$2,900 líneas \\
+		\hline
+		Namespace & \texttt{http://smartcompare.com/ontologia\#} \\
+		\hline
+		Formato & RDF/XML \\
+		\hline
+	\end{tabular}
+	\caption{Características de la ontología}
+\end{table}
+
+\subsection{Jerarquía de Clases}
+
+\begin{verbatim}
+owl:Thing
+|-- Producto (raiz de productos)
+|   |-- Electronica
+|   |   |-- Smartphone
+|   |   |-- Tablet
+|   |   |-- Computadora
+|   |       |-- Desktop
+|   |       |-- Laptop
+|   |           |-- LaptopGamer (inferida por SWRL)
+|   |-- Moda
+|   |   |-- Ropa
+|   |   |-- Calzado
+|   |-- Hogar
+|       |-- Muebles
+|       |-- Electrodomesticos
+|
+|-- Usuario
+|   |-- Cliente
+|   |-- Vendedor
+|
+|-- Resena
+    |-- Resena_Positiva (inferida por SWRL)
+    |-- Resena_Negativa (inferida por SWRL)
+\end{verbatim}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Jerarquía de clases en Protégé, tab Classes}
+    \label{fig:protege_classes}
+\end{figure}
+
+\newpage
+
+\subsection{Propiedades de Datos (Data Properties)}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|p{4cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Propiedad} & \color{white}\textbf{Dominio} & \color{white}\textbf{Rango} & \color{white}\textbf{Descripción} \\
+		\hline
+		tienePrecio & Producto & xsd:float & Precio en USD \\
+		\hline
+		tieneDescuento & Producto & xsd:float & Porcentaje de descuento \\
+		\hline
+		tieneRAM\_GB & Electronica & xsd:integer & RAM en GB \\
+		\hline
+		tieneAlmacenamiento\_GB & Electronica & xsd:integer & Almacenamiento en GB \\
+		\hline
+		tienePulgadas & Electronica & xsd:float & Tamaño de pantalla \\
+		\hline
+		resolucionPantalla & Electronica & xsd:string & Resolución (ej: ``1920x1080'') \\
+		\hline
+		bateriaCapacidad\_mAh & Electronica & xsd:integer & Capacidad de batería \\
+		\hline
+		procesadorModelo & Electronica & xsd:string & Modelo del procesador \\
+		\hline
+		procesadorVelocidad\_GHz & Electronica & xsd:float & Velocidad del CPU \\
+		\hline
+		numeroNucleosCPU & Electronica & xsd:integer & Número de núcleos \\
+		\hline
+		tarjetaGrafica & Computadora & xsd:string & GPU \\
+		\hline
+		garantiaMeses & Producto & xsd:integer & Garantía en meses \\
+		\hline
+		esEquivalenteTecnico & Symmetric & Productos técnicamente equivalentes \\
+		\hline
+		esMejorOpcionQue & Transitive & Producto A es mejor opción que B \\
+		\hline
+		tieneMejorRAMQue & - & Comparación de RAM \\
+		\hline
+	\end{tabular}
+	\caption{Propiedades de objeto de la ontología}
+\end{table}
+\begin{itemize}
+	\item \texttt{iPhone15\_Barato} (RAM: 6GB, 128GB, Precio: \$799)
+	\item \texttt{Samsung\_Galaxy\_S24} (RAM: 8GB, 256GB, Precio: \$899)
+	\item \texttt{Pixel\_8\_Pro} (RAM: 12GB, 256GB, Precio: \$999)
+\end{itemize}
+
+\textbf{Tablets:}
+\begin{itemize}
+	\item \texttt{iPad\_Pro\_12} (RAM: 16GB, 512GB, Precio: \$1099)
+	\item \texttt{Samsung\_Tab\_S9} (RAM: 12GB, 256GB, Precio: \$849)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Individuos en Protégé, tab Individuals}
+    \label{fig:protege_individuals}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Reglas SWRL}
+
+\subsection{Ubicación en la Ontología}
+
+Las reglas SWRL se encuentran en las líneas \textbf{1964-2300} del archivo \texttt{SmartCompareMarket.owl}.
+
+\subsection{Reglas Implementadas}
+
+\subsubsection{Regla 1: DetectarGamer}
+
+\begin{lstlisting}[style=sparql]
+Laptop(?l) AND tieneRAM_GB(?l, ?ram) AND greaterThanOrEqual(?ram, 16)
+  -> LaptopGamer(?l)
+\end{lstlisting}
+
+\textbf{Explicación técnica:}
+\begin{itemize}
+	\item \textbf{Antecedente:} Un individuo \texttt{?l} es de clase \texttt{Laptop} Y tiene propiedad \texttt{tieneRAM\_GB} con valor \texttt{?ram} Y ese valor es $\geq$ 16
+	\item \textbf{Consecuente:} El individuo \texttt{?l} se clasifica como miembro de la clase \texttt{LaptopGamer}
+	\item \textbf{Efecto:} Subsunción automática por el razonador Pellet
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Regla DetectarGamer en Protégé, tab SWRL}
+    \label{fig:swrl_rule}
+\end{figure}
+
+\subsubsection{Regla 2: EncontrarMejorPrecio}
+
+\begin{lstlisting}[style=sparql]
+Producto(?p1) AND Producto(?p2) AND tieneNombre(?p1, ?n) AND tieneNombre(?p2, ?n) 
+  AND tienePrecio(?p1, ?pr1) AND tienePrecio(?p2, ?pr2) AND lessThan(?pr1, ?pr2)
+  -> esMejorOpcionQue(?p1, ?p2)
+\end{lstlisting}
+
+\textbf{Explicación:} Dos productos con el mismo nombre pero diferente precio; el de menor precio se marca como ``mejor opción que'' el otro.
+
+\subsubsection{Regla 3: ClasificarPositivas}
+
+\begin{lstlisting}[style=sparql]
+Resena(?r) AND tieneCalificacion(?r, ?cal) AND greaterThanOrEqual(?cal, 4)
+  -> Resena_Positiva(?r)
+\end{lstlisting}
+
+\subsubsection{Regla 4: ClasificarNegativas}
+
+\begin{lstlisting}[style=sparql]
+Resena(?r) AND tieneCalificacion(?r, ?cal) AND lessThanOrEqual(?cal, 2)
+  -> Resena_Negativa(?r)
+\end{lstlisting}
+
+\subsection{Ejecución de Reglas}
+
+El razonador Pellet se ejecuta al iniciar el backend:
+
+\begin{lstlisting}[style=python]
+# backend/reasoning/ontology_loader.py
+from owlready2 import sync_reasoner_pellet
+
+def load_ontology():
+    onto = get_ontology("SmartCompareMarket.owl").load()
+    
+    # Ejecutar razonador Pellet con soporte SWRL
+    with onto:
+        sync_reasoner_pellet(infer_property_values=True, 
+                             infer_data_property_values=True)
+    
+    return onto
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Log del backend mostrando Razonador Pellet ejecutado exitosamente}
+    \label{fig:backend_log}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{API REST - Endpoints}
+
+\subsection{Base URL}
+
+\begin{verbatim}
+http://localhost:5000/api/v1
+\end{verbatim}
+
+\subsection{Endpoints de Productos}
+
+\subsubsection{GET /products}
+
+Obtener todos los productos.
+
+\begin{lstlisting}
+curl http://localhost:5000/api/v1/products
+\end{lstlisting}
+
+\textbf{Respuesta:}
+\begin{lstlisting}[style=json]
+{
+  "products": [
+    {
+      "id": "Laptop_Dell_XPS",
+      "name": "Dell XPS 15",
+      "category": "Laptop",
+      "types": ["Producto", "Electronica", "Computadora", "Laptop", "LaptopGamer"],
+      "price": 1599.99,
+      "ram_gb": 32,
+      "storage_gb": 1024,
+      "rating": 4.7
+    }
+  ],
+  "count": 60
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Respuesta JSON de /api/v1/products en navegador}
+    \label{fig:json_products}
+\end{figure}
+
+\subsubsection{GET /products/\{product\_id\}/relationships}
+
+Obtener relaciones de un producto.
+
+\begin{lstlisting}
+curl http://localhost:5000/api/v1/products/iPhone15_Barato/relationships
+\end{lstlisting}
+
+\textbf{Respuesta:}
+\begin{lstlisting}[style=json]
+{
+  "product_id": "iPhone15_Barato",
+  "compatible": ["Cargador_USB_C", "Funda_iPhone15"],
+  "incompatible": ["Cargador_MicroUSB"],
+  "similar": ["iPhone15_Pro", "Samsung_Galaxy_S24"],
+  "better_than": ["iPhone14_Base"]
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Endpoint de Comparación}
+
+\subsubsection{POST /compare}
+
+\begin{lstlisting}
+curl -X POST http://localhost:5000/api/v1/compare \
+  -H "Content-Type: application/json" \
+  -d '{"products": ["Laptop_Dell_XPS", "Laptop_MSI_Gaming"]}'
+\end{lstlisting}
+
+\textbf{Request Body:}
+\begin{lstlisting}[style=json]
+{
+  "products": ["Laptop_Dell_XPS", "Laptop_MSI_Gaming", "Laptop_HP_Pavilion"]
+}
+\end{lstlisting}
+
+\textbf{Respuesta:}
+\begin{lstlisting}[style=json]
+{
+  "winner": "Laptop_Dell_XPS",
+  "winner_score": 87.5,
+  "comparison_table": {
+    "Precio": {"Laptop_Dell_XPS": 1599, "Laptop_MSI_Gaming": 1299},
+    "RAM (GB)": {"Laptop_Dell_XPS": 32, "Laptop_MSI_Gaming": 16},
+    "Almacenamiento (GB)": {"Laptop_Dell_XPS": 1024, "Laptop_MSI_Gaming": 512}
+  },
+  "swrl_inferences": [
+    {
+      "type": "esMejorOpcionQue",
+      "subject": "Laptop_Dell_XPS",
+      "object": "Laptop_MSI_Gaming"
+    }
+  ],
+  "reason": "Laptop_Dell_XPS gana con 87.5 puntos"
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Respuesta de comparación mostrando ganador y tabla}
+    \label{fig:comparison_response}
+\end{figure}
+
+\subsection{Endpoint de Recomendaciones}
+
+\subsubsection{POST /recommendations}
+
+\begin{lstlisting}
+curl -X POST http://localhost:5000/api/v1/recommendations \
+  -H "Content-Type: application/json" \
+  -d '{"budget": 1500, "preferred_category": "Laptop", "min_ram": 16}'
+\end{lstlisting}
+
+\textbf{Respuesta:}
+\begin{lstlisting}[style=json]
+{
+  "recommendations": [
+    {
+      "product_id": "Laptop_MSI_Gaming",
+      "name": "MSI GF65 Thin",
+      "score": 92.5,
+      "match_percentage": 95,
+      "reason": "Laptop Gamer detectado (SWRL) + Excelente relacion calidad-precio",
+      "price": 1299
+    }
+  ],
+  "total_matches": 5
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Respuesta de recomendaciones con scores y razones}
+    \label{fig:recommendation_response}
+\end{figure}
+
+\newpage
+
+\subsection{Endpoint de Búsqueda SPARQL}
+
+\subsubsection{GET /search}
+
+\begin{lstlisting}
+curl "http://localhost:5000/api/v1/search?category=Laptop&min_price=1000&max_price=1500&min_ram=16"
+\end{lstlisting}
+
+\textbf{Parámetros:}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|p{6cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Parámetro} & \color{white}\textbf{Tipo} & \color{white}\textbf{Descripción} \\
+		\hline
+		text & string & Búsqueda de texto libre \\
+		\hline
+		category & string & Categoría (Laptop, Smartphone, Tablet) \\
+		\hline
+		min\_price & float & Precio mínimo \\
+		\hline
+		max\_price & float & Precio máximo \\
+		\hline
+		min\_ram & integer & RAM mínima en GB \\
+		\hline
+	\end{tabular}
+	\caption{Parámetros del endpoint de búsqueda}
+\end{table}
+
+\textbf{Consulta SPARQL generada internamente:}
+\begin{lstlisting}[style=sparql]
+PREFIX ns: <http://smartcompare.com/ontologia#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?product ?name ?price ?ram WHERE {
+  ?product rdf:type ns:Laptop .
+  ?product ns:tienePrecio ?price .
+  ?product ns:tieneRAM_GB ?ram .
+  FILTER (?price >= 1000 && ?price <= 1500)
+  FILTER (?ram >= 16)
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Respuesta de búsqueda filtrada}
+    \label{fig:search_response}
+\end{figure}
+
+\subsection{Endpoints SWRL}
+
+\subsubsection{GET /swrl/gaming-laptops}
+
+\begin{lstlisting}
+curl http://localhost:5000/api/v1/swrl/gaming-laptops
+\end{lstlisting}
+
+\textbf{Respuesta:}
+\begin{lstlisting}[style=json]
+{
+  "rule": "DetectarGamer",
+  "description": "Laptops con RAM >= 16GB clasificadas como LaptopGamer",
+  "results": [
+    {"id": "Laptop_Dell_XPS", "ram": 32, "classified_as": "LaptopGamer"},
+    {"id": "Laptop_MSI_Gaming", "ram": 16, "classified_as": "LaptopGamer"}
+  ],
+  "count": 3
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Respuesta de gaming-laptops mostrando productos clasificados}
+    \label{fig:swrl_response}
+\end{figure}
+
+\newpage
+
+\subsection{Endpoint de Validación}
+
+\subsubsection{GET /validate/all}
+
+\begin{lstlisting}
+curl http://localhost:5000/api/v1/validate/all
+\end{lstlisting}
+
+\textbf{Respuesta:}
+\begin{lstlisting}[style=json]
+{
+  "summary": {
+    "total_products": 60,
+    "valid": 58,
+    "with_errors": 1,
+    "with_warnings": 3
+  },
+  "details": [...]
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Respuesta de validación masiva}
+    \label{fig:validation_response}
+\end{figure}
+
+\subsection{Documentación Interactiva}
+
+FastAPI genera documentación automática:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{URL} & \color{white}\textbf{Descripción} \\
+		\hline
+		http://localhost:5000/docs & Swagger UI (interactiva) \\
+		\hline
+		http://localhost:5000/redoc & ReDoc (documentación) \\
+		\hline
+	\end{tabular}
+	\caption{URLs de documentación de la API}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Página de Swagger UI en /docs mostrando todos los endpoints}
+    \label{fig:swagger_ui}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Servicios del Backend}
+
+\subsection{ComparisonService}
+
+\textbf{Ubicación:} \texttt{backend/services/comparison\_service.py} (445 líneas)
+
+\textbf{Responsabilidad:} Motor de comparación inteligente con scoring multi-factor.
+
+\subsubsection{Algoritmo de Scoring}
+
+\begin{lstlisting}[style=python]
+WEIGHTS = {
+    "battery": 0.20,      # Mayor es mejor
+    "rating": 0.18,       # Mayor es mejor
+    "price": 0.14,        # MENOR es mejor (invertido)
+    "resolution": 0.10,   # Mayor es mejor
+    "ram": 0.10,          # Mayor es mejor
+    "storage": 0.10,      # Mayor es mejor
+    "warranty": 0.07,     # Mayor es mejor
+    "screen": 0.06,       # Mayor es mejor
+    "weight": 0.05        # MENOR es mejor (invertido)
+}
+
+REFERENCE_VALUES = {
+    "battery": 10000,     # 10000 mAh = 100 puntos
+    "rating": 5.0,        # 5 estrellas = 100 puntos
+    "price": 3000,        # $3000 = 0 puntos (precio maximo)
+    "ram": 64,            # 64GB = 100 puntos
+    "storage": 2048,      # 2TB = 100 puntos
+}
+\end{lstlisting}
+
+\subsubsection{Cálculo del Score}
+
+\begin{lstlisting}[style=python]
+def _calculate_score(self, product: dict) -> float:
+    score = 0
+    
+    for factor, weight in WEIGHTS.items():
+        value = product.get(factor, 0)
+        reference = REFERENCE_VALUES[factor]
+        
+        if factor in ["price", "weight"]:  # Menor es mejor
+            normalized = max(0, 100 - (value / reference * 100))
+        else:  # Mayor es mejor
+            normalized = min(100, value / reference * 100)
+        
+        score += normalized * weight
+    
+    # Bonus por reglas SWRL
+    if self._has_swrl_bonus(product):
+        score += 2  # Bonus por cada relacion "esMejorOpcionQue"
+    
+    return round(score, 2)
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Código de _calculate_score en comparison_service.py}
+    \label{fig:calc_score}
+\end{figure}
+
+\newpage
+
+\subsection{RecommendationService}
+
+\textbf{Ubicación:} \texttt{backend/services/recommendation\_service.py} (277 líneas)
+
+\textbf{Responsabilidad:} Sistema de recomendaciones personalizadas.
+
+\subsubsection{Sistema de Scoring para Recomendaciones}
+
+\begin{lstlisting}[style=python]
+def _calculate_recommendation_score(self, product: dict, preferences: dict) -> float:
+    score = 0
+    
+    # Factor 1: Presupuesto (30 puntos)
+    if product["price"] <= preferences["budget"]:
+        budget_usage = product["price"] / preferences["budget"]
+        score += 30 * budget_usage
+    
+    # Factor 2: Calificacion (25 puntos)
+    score += product["rating"] * 5  # 5 puntos por estrella
+    
+    # Factor 3: RAM (15 puntos)
+    if product["ram"] >= preferences.get("min_ram", 0):
+        score += 15
+    
+    # Factor 4: Almacenamiento (10 puntos)
+    if product["storage"] >= preferences.get("min_storage", 0):
+        score += 10
+    
+    # Bonus SWRL
+    if "LaptopGamer" in product.get("types", []):
+        score += 10  # Bonus por ser Laptop Gamer
+    
+    return score
+\end{lstlisting}
+
+\subsection{ValidationService}
+
+\textbf{Ubicación:} \texttt{backend/services/validation\_service.py} (152 líneas)
+
+\textbf{Reglas de Validación:}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|p{8cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Tipo} & \color{white}\textbf{Condición} \\
+		\hline
+		Error & Precio negativo \\
+		\hline
+		Error & RAM negativa o $>$ 512GB \\
+		\hline
+		Error & Almacenamiento negativo o $>$ 10TB \\
+		\hline
+		Error & Calificación fuera de rango 0-5 \\
+		\hline
+		Advertencia & Precio $>$ \$100,000 \\
+		\hline
+		Advertencia & RAM $>$ 128GB \\
+		\hline
+	\end{tabular}
+	\caption{Reglas de validación implementadas}
+\end{table}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Instalación para Desarrolladores}
+
+\subsection{Prerrequisitos}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Software} & \color{white}\textbf{Versión} & \color{white}\textbf{Verificación} \\
+		\hline
+		Python & 3.11+ & \texttt{python --version} \\
+		\hline
+		Node.js & 18+ & \texttt{node --version} \\
+		\hline
+		npm & 9+ & \texttt{npm --version} \\
+		\hline
+		Java JDK & 11+ & \texttt{java -version} \\
+		\hline
+		Git & Cualquiera & \texttt{git --version} \\
+		\hline
+	\end{tabular}
+	\caption{Prerrequisitos de instalación}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal mostrando todos los comandos de verificación}
+    \label{fig:verify_cmds}
+\end{figure}
+
+\subsection{Clonar el Repositorio}
+
+\begin{lstlisting}
+git clone https://github.com/AlvaroMachaca0503/Web_Semantica.git
+cd Web_Semantica
+\end{lstlisting}
+
+\subsection{Configuración del Backend}
+
+\begin{lstlisting}
+# 1. Navegar al backend
+cd backend
+
+# 2. Crear entorno virtual
+python -m venv venv
+
+# 3. Activar entorno virtual
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+
+# 4. Instalar dependencias
+pip install -r requirements.txt
+
+# 5. Verificar instalacion
+python -c "import owlready2; print('Owlready2 OK')"
+python -c "import fastapi; print('FastAPI OK')"
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal con entorno virtual activado y verificaciones exitosas}
+    \label{fig:venv_verify}
+\end{figure}
+
+\subsection{Configuración del Frontend}
+
+\begin{lstlisting}
+# 1. Navegar al frontend
+cd frontend
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Verificar instalacion
+npm list react
+\end{lstlisting}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Ejecución y Despliegue}
+
+\subsection{Modo Desarrollo}
+
+\textbf{Terminal 1 - Backend:}
+\begin{lstlisting}
+cd backend
+venv\Scripts\activate  # Windows
+python main.py
+\end{lstlisting}
+
+\textbf{Logs esperados:}
+\begin{lstlisting}
+[INFO] Cargando ontologia SmartCompareMarket.owl...
+[OK] Ontologia cargada: 60 productos encontrados
+[INFO] Ejecutando razonador Pellet...
+[OK] Razonador Pellet ejecutado exitosamente
+[OK] Reglas SWRL aplicadas: DetectarGamer, EncontrarMejorPrecio...
+INFO:     Uvicorn running on http://0.0.0.0:5000
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal del backend con todos los logs de inicio exitosos}
+    \label{fig:backend_start}
+\end{figure}
+
+\textbf{Terminal 2 - Frontend:}
+\begin{lstlisting}
+cd frontend
+npm run dev
+\end{lstlisting}
+
+\textbf{Logs esperados:}
+\begin{lstlisting}
+  VITE v5.4.19  ready in 500 ms
+
+  ->  Local:   http://localhost:5173/
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Terminal del frontend con Vite ejecutándose}
+    \label{fig:frontend_start}
+\end{figure}
+
+\subsection{Modo Producción}
+
+\textbf{Backend:}
+\begin{lstlisting}
+cd backend
+uvicorn main:app --host 0.0.0.0 --port 5000 --workers 4
+\end{lstlisting}
+
+\textbf{Frontend:}
+\begin{lstlisting}
+cd frontend
+npm run build
+npm run preview
+\end{lstlisting}
+
+\subsection{Puertos Utilizados}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Servicio} & \color{white}\textbf{Puerto} & \color{white}\textbf{URL} \\
+		\hline
+		Backend API & 5000 & http://localhost:5000 \\
+		\hline
+		Frontend Dev & 5173 & http://localhost:5173 \\
+		\hline
+		Swagger Docs & 5000 & http://localhost:5000/docs \\
+		\hline
+	\end{tabular}
+	\caption{Puertos utilizados por el sistema}
+\end{table}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Testing}
+
+\subsection{Tests del Backend}
+
+\begin{lstlisting}
+cd backend
+
+# Ejecutar todos los tests
+pytest
+
+# Con cobertura
+pytest --cov=.
+
+# Tests especificos
+pytest tests/test_comparison.py -v
+\end{lstlisting}
+
+\subsection{Tests de la API}
+
+\begin{lstlisting}
+# Test basico de salud
+curl http://localhost:5000/api/v1/products | head -c 200
+
+# Test de comparacion
+curl -X POST http://localhost:5000/api/v1/compare \
+  -H "Content-Type: application/json" \
+  -d '{"products": ["Laptop_Dell_XPS", "Laptop_MSI_Gaming"]}'
+\end{lstlisting}
+
+\subsection{Tests Manuales Recomendados}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|p{4cm}|p{5cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Test} & \color{white}\textbf{Comando} & \color{white}\textbf{Resultado Esperado} \\
+		\hline
+		Listar productos & GET /api/v1/products & JSON con 60+ productos \\
+		\hline
+		Gaming laptops & GET /api/v1/swrl/gaming-laptops & 3+ laptops con RAM $\geq$ 16GB \\
+		\hline
+		Comparación & POST /api/v1/compare & Ganador con score \\
+		\hline
+		Validación & GET /api/v1/validate/all & Resumen de validación \\
+		\hline
+	\end{tabular}
+	\caption{Tests manuales recomendados}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Resultados de pytest mostrando todos los tests pasando}
+    \label{fig:pytest_results}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Mantenimiento y Extensibilidad}
+
+\subsection{Agregar Nuevos Productos}
+
+\begin{enumerate}
+	\item Abrir \texttt{backend/ontology/SmartCompareMarket.owl} en \textbf{Protégé}
+	\item Tab ``Individuals'' $\rightarrow$ Click ``+'' para agregar individuo
+	\item Seleccionar clase (ej: \texttt{Laptop})
+	\item Agregar propiedades de datos:
+	\begin{itemize}
+		\item \texttt{tienePrecio}
+		\item \texttt{tieneRAM\_GB}
+		\item \texttt{tieneAlmacenamiento\_GB}
+	\end{itemize}
+	\item Guardar archivo
+	\item Reiniciar backend
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{logo_salle.png} 
+    \caption{Protégé mostrando cómo agregar un nuevo individuo}
+    \label{fig:protege_add}
+\end{figure}
+
+\subsection{Agregar Nuevas Reglas SWRL}
+
+\begin{enumerate}
+	\item En Protégé $\rightarrow$ Tab ``SWRL''
+	\item Click ``+'' para nueva regla
+	\item Escribir regla en formato SWRL
+	\item Guardar
+	\item Reiniciar backend
+\end{enumerate}
+
+\textbf{Ejemplo de nueva regla:}
+\begin{lstlisting}[style=sparql]
+Smartphone(?s) AND tieneRAM_GB(?s, ?ram) AND greaterThan(?ram, 8)
+  -> SmartphoneGamaAlta(?s)
+\end{lstlisting}
+
+\subsection{Modificar Pesos de Comparación}
+
+Editar archivo \texttt{backend/data/comparison\_weights.json}:
+
+\begin{lstlisting}[style=json]
+{
+  "battery": 0.20,
+  "rating": 0.18,
+  "price": 0.14,
+  "resolution": 0.10,
+  "ram": 0.10,
+  "storage": 0.10,
+  "warranty": 0.07,
+  "screen": 0.06,
+  "weight": 0.05
+}
+\end{lstlisting}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Lista de Capturas de Pantalla}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{\#} & \color{white}\textbf{Descripción de la Captura} \\
+		\hline
+		1 & Diagrama de arquitectura del sistema \\
+		\hline
+		2 & Archivo \texttt{requirements.txt} con dependencias \\
+		\hline
+		3 & Archivo \texttt{package.json} con dependencias \\
+		\hline
+		4 & Estructura de carpetas del proyecto \\
+		\hline
+		5 & Jerarquía de clases en Protégé \\
+		\hline
+		6 & Propiedades de datos en Protégé \\
+		\hline
+		7 & Propiedades de objeto en Protégé \\
+		\hline
+		8 & Individuos en Protégé \\
+		\hline
+		9 & Regla DetectarGamer en Protégé \\
+		\hline
+		10 & Log del backend con Razonador Pellet \\
+		\hline
+		11 & Respuesta JSON de /api/v1/products \\
+		\hline
+		12 & Respuesta de comparación \\
+		\hline
+		13 & Respuesta de recomendaciones \\
+		\hline
+		14 & Respuesta de búsqueda SPARQL \\
+		\hline
+		15 & Respuesta de gaming-laptops \\
+		\hline
+		16 & Respuesta de validación masiva \\
+		\hline
+		17 & Swagger UI en /docs \\
+		\hline
+		18 & Código de \_calculate\_score \\
+		\hline
+		19 & Terminal con comandos de verificación \\
+		\hline
+		20 & Terminal con entorno virtual activado \\
+		\hline
+		21 & Terminal del backend ejecutándose \\
+		\hline
+		22 & Terminal del frontend ejecutándose \\
+		\hline
+		23 & Resultados de pytest \\
+		\hline
+		24 & Protégé agregando nuevo individuo \\
+		\hline
+	\end{tabular}
+	\caption{Lista de capturas de pantalla requeridas}
+\end{table}
+
+\textbf{Total de capturas requeridas: 24}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Resumen de Archivos Importantes}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|p{5cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Archivo} & \color{white}\textbf{Líneas} & \color{white}\textbf{Descripción} \\
+		\hline
+		SmartCompareMarket.owl & 2,900+ & Ontología principal \\
+		\hline
+		comparison\_service.py & 445 & Motor de comparación \\
+		\hline
+		recommendation\_service.py & 277 & Sistema de recomendaciones \\
+		\hline
+		queries.py & 267 & Consultas SPARQL \\
+		\hline
+		validation\_service.py & 152 & Validación de datos \\
+		\hline
+		main.py & $\sim$200 & Punto de entrada \\
+		\hline
+		ComparePage.tsx & 500+ & Página de comparación \\
+		\hline
+	\end{tabular}
+	\caption{Archivos principales del proyecto}
+\end{table}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Información del Proyecto}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{5cm}|p{9cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Campo} & \color{white}\textbf{Información} \\
+		\hline
+		Universidad & \itemUniversity \\
+		\hline
+		Facultad & \itemFaculty \\
+		\hline
+		Carrera & \itemSchool \\
+		\hline
+		Curso & \itemCourse \\
+		\hline
+		Docente & \itemProfesor \\
+		\hline
+		Ciclo Académico & \itemAcademic \\
+		\hline
+		Fecha & \itemDate \\
+		\hline
+		Proyecto & \itemProjectNumber \\
+		\hline
+		Nombre del Sistema & \itemProjectName \\
+		\hline
+		Versión del Manual & \itemVersion \\
+		\hline
+	\end{tabular}
+	\caption{Información académica del proyecto}
+\end{table}
+
+\subsection{Autor}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Nombre} & \color{white}\textbf{Correo Electrónico} \\
+		\hline
+		Álvaro André Machaca Meléndez & amachacam@ulasalle.edu.pe \\
+		\hline
+	\end{tabular}
+	\caption{Autor del proyecto}
+\end{table}
+
+\subsection{Repositorio}
+
+\begin{itemize}
+	\item \textbf{GitHub:} \url{https://github.com/AlvaroMachaca0503/Web_Semantica}
+\end{itemize}
+
+\subsection{Historial de Versiones}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|p{8cm}|}
+		\hline
+		\rowcolor{tablebackground}
+		\color{white}\textbf{Versión} & \color{white}\textbf{Fecha} & \color{white}\textbf{Cambios} \\
+		\hline
+		1.0 & Diciembre 2024 & Versión inicial del manual técnico \\
+		\hline
+	\end{tabular}
+	\caption{Control de versiones del manual}
+\end{table}
+
+\end{document}

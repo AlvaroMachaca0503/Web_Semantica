@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from dependencies import get_product_service, get_inference_engine
 from services.product_service import ProductService
 from reasoning.inference_engine import InferenceEngine
-from models import ProductListResponse, ProductResponse, ErrorResponse
+from models import ProductListResponse, ProductResponse, SingleProductResponse, ErrorResponse
 
 router = APIRouter()
 
@@ -98,7 +98,7 @@ async def get_products(
 
 @router.get(
     '/products/{product_id}',
-    response_model=ProductResponse | ErrorResponse,
+    response_model=SingleProductResponse | ErrorResponse,
     summary="Obtener producto por ID",
     description="""
     Obtiene un producto específico por su ID.
@@ -111,7 +111,7 @@ async def get_products(
     responses={
         200: {
             "description": "Producto encontrado",
-            "model": ProductResponse
+            "model": SingleProductResponse
         },
         404: {
             "description": "Producto no encontrado",
@@ -135,7 +135,11 @@ async def get_product(
                 detail=f"Producto '{product_id}' no encontrado"
             )
         
-        return ProductResponse(**product)
+        # Devolver en estructura consistente con el frontend
+        return {
+            "success": True,
+            "data": ProductResponse(**product)
+        }
         
     except HTTPException:
         raise

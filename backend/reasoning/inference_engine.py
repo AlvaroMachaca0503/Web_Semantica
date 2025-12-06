@@ -355,41 +355,41 @@ class InferenceEngine:
     def check_compatibility(self, product1_id: str, product2_id: str) -> Dict:
         """
         Verifica la compatibilidad entre dos productos.
-        
+
         Args:
             product1_id: ID del primer producto
             product2_id: ID del segundo producto
-            
+
         Returns:
             Diccionario con información de compatibilidad
         """
         product1 = self.get_product_by_id(product1_id)
         product2 = self.get_product_by_id(product2_id)
-        
+
         if product1 is None or product2 is None:
             return {
                 "compatible": False,
                 "incompatible": False,
                 "error": "Uno o ambos productos no encontrados"
             }
-        
+
         try:
             # Verificar compatibilidad
             is_compatible = False
             if hasattr(product1, 'esCompatibleCon'):
                 is_compatible = product2 in product1.esCompatibleCon
-            
+
             # Verificar incompatibilidad
             is_incompatible = False
             if hasattr(product1, 'incompatibleCon'):
                 is_incompatible = product2 in product1.incompatibleCon
-            
+
             return {
                 "compatible": is_compatible,
                 "incompatible": is_incompatible,
                 "relationship": "compatible" if is_compatible else ("incompatible" if is_incompatible else "unknown")
             }
-            
+
         except Exception as e:
             logger.error(f"Error al verificar compatibilidad: {e}")
             return {
@@ -397,5 +397,39 @@ class InferenceEngine:
                 "incompatible": False,
                 "error": str(e)
             }
+
+    def check_object_property(self, subject_id: str, property_name: str, object_id: str) -> bool:
+        """
+        Verifica si existe una relacion de propiedad de objeto entre dos productos.
+
+        Args:
+            subject_id: ID del producto sujeto
+            property_name: Nombre de la propiedad (ej: "esMejorOpcionQue", "esCompatibleCon")
+            object_id: ID del producto objeto
+
+        Returns:
+            True si existe la relacion, False en caso contrario
+        """
+        subject = self.get_product_by_id(subject_id)
+        obj = self.get_product_by_id(object_id)
+
+        if subject is None or obj is None:
+            return False
+
+        try:
+            # Verificar si el sujeto tiene la propiedad
+            if hasattr(subject, property_name):
+                property_values = getattr(subject, property_name)
+                # property_values puede ser una lista o un objeto individual
+                if isinstance(property_values, list):
+                    return obj in property_values
+                else:
+                    return obj == property_values
+
+            return False
+
+        except Exception as e:
+            logger.error(f"Error al verificar propiedad '{property_name}' entre '{subject_id}' y '{object_id}': {e}")
+            return False
 
 

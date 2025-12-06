@@ -8,10 +8,12 @@ Nivel: 2
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 import config
 
 # Importar routers
-from routers import products, swrl, compare, search
+from routers import products, swrl, compare, search, validation, recommendations, equivalences, market, classify
 
 
 def create_app() -> FastAPI:
@@ -85,6 +87,16 @@ def create_app() -> FastAPI:
     app.include_router(swrl.router, prefix="/api/v1", tags=["SWRL"])
     app.include_router(compare.router, prefix="/api/v1", tags=["Comparación"])
     app.include_router(search.router, prefix="/api/v1", tags=["Búsqueda"])
+    app.include_router(validation.router, prefix="/api/v1", tags=["Validación"])
+    app.include_router(recommendations.router, prefix="/api/v1", tags=["Recomendaciones"])
+    app.include_router(equivalences.router, prefix="/api/v1", tags=["Equivalencias"])
+    app.include_router(market.router, tags=["Análisis de Mercado"])
+    app.include_router(classify.router, tags=["Clasificación"])
+    
+    # Montar archivos estáticos (imágenes de productos)
+    static_path = Path(__file__).parent / "static"
+    if static_path.exists():
+        app.mount("/static", StaticFiles(directory=str(static_path)), name="static")
     
     # Ruta raíz
     @app.get("/", tags=["Sistema"])
@@ -127,12 +139,12 @@ if __name__ == "__main__":
     import uvicorn
     
     print("=" * 70)
-    print("🚀 SmartCompareMarket Backend (FastAPI) - Iniciando...")
+    print("[START] SmartCompareMarket Backend (FastAPI) - Iniciando...")
     print("=" * 70)
-    print(f"\n✅ Servidor corriendo en: http://{config.FLASK_CONFIG['host']}:{config.FLASK_CONFIG['port']}")
-    print(f"📄 Documentación Swagger: http://localhost:{config.FLASK_CONFIG['port']}/docs")
-    print(f"📄 Documentación ReDoc: http://localhost:{config.FLASK_CONFIG['port']}/redoc")
-    print("\n📊 Endpoints disponibles:")
+    print(f"\n[OK] Servidor corriendo en: http://{config.FLASK_CONFIG['host']}:{config.FLASK_CONFIG['port']}")
+    print(f"[DOCS] Documentacion Swagger: http://localhost:{config.FLASK_CONFIG['port']}/docs")
+    print(f"[DOCS] Documentacion ReDoc: http://localhost:{config.FLASK_CONFIG['port']}/redoc")
+    print("\n[API] Endpoints disponibles:")
     print("   GET  /api/v1/products")
     print("   GET  /api/v1/products/{id}")
     print("   GET  /api/v1/products/{id}/relationships")
@@ -140,7 +152,7 @@ if __name__ == "__main__":
     print("   GET  /api/v1/swrl/gaming-laptops")
     print("   POST /api/v1/compare")
     print("   GET  /api/v1/search")
-    print("\n💡 Presiona Ctrl+C para detener el servidor\n")
+    print("\n[INFO] Presiona Ctrl+C para detener el servidor\n")
     print("=" * 70)
     
     uvicorn.run(

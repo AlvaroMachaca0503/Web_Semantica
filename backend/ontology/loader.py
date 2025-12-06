@@ -6,6 +6,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import config
 
+# Importar razonadores
+from owlready2 import sync_reasoner_pellet
+
 class OntologyLoader:
     """Carga y gestiona la ontología SmartCompareMarket con razonamiento SWRL"""
     
@@ -23,48 +26,48 @@ class OntologyLoader:
             onto_path = str(config.ONTOLOGY_FILE)
             self.onto = self.world.get_ontology(f"file://{onto_path}").load()
             
-            print(f"✅ Ontología cargada: {self.onto.name}")
+            print(f"[OK] Ontologia cargada: {self.onto.name}")
             print(f"   - Clases: {len(list(self.onto.classes()))}")
             print(f"   - Individuos: {len(list(self.onto.individuals()))}")
             print(f"   - Object Properties: {len(list(self.onto.object_properties()))}")
             print(f"   - Data Properties: {len(list(self.onto.data_properties()))}")
-            
+
             return self.onto
-            
+
         except Exception as e:
-            print(f"❌ Error cargando ontología: {e}")
+            print(f"[ERROR] Error cargando ontologia: {e}")
             raise
     
     def run_reasoner(self):
-        """Ejecuta el razonador HermiT con soporte SWRL"""
+        """Ejecuta el razonador Pellet con soporte SWRL"""
         try:
-            print("🧠 Ejecutando razonador HermiT...")
-            
+            print("[REASONER] Ejecutando razonador Pellet...")
+
             # Ejecutar razonador con inferencias
             with self.onto:
-                sync_reasoner_hermit(
+                sync_reasoner_pellet(
                     infer_property_values=config.REASONER_CONFIG["infer_property_values"],
                     debug=config.REASONER_CONFIG["debug"]
                 )
-            
-            print("✅ Razonador ejecutado exitosamente")
-            print("   🔥 Reglas SWRL aplicadas:")
-            print("      1. DetectarGamer (RAM >= 16GB → LaptopGamer)")
-            print("      2. EncontrarMejorPrecio (precio menor → esMejorOpcionQue)")
-            print("      3. ClasificarPositivas (cal >= 4 → Reseña_Positiva)")
-            print("      4. ClasificarNegativas (cal <= 2 → Reseña_Negativa)")
-            
+
+            print("[OK] Razonador Pellet ejecutado exitosamente")
+            print("   [SWRL] Reglas SWRL que deberian aplicarse:")
+            print("      1. DetectarGamer (RAM >= 16GB -> LaptopGamer)")
+            print("      2. EncontrarMejorPrecio (precio menor -> esMejorOpcionQue)")
+            print("      3. ClasificarPositivas (cal >= 4 -> Resena_Positiva)")
+            print("      4. ClasificarNegativas (cal <= 2 -> Resena_Negativa)")
+
         except Exception as e:
-            print(f"❌ Error ejecutando razonador: {e}")
+            print(f"[ERROR] Error ejecutando razonador: {e}")
             raise
     
     def save_inferred(self, output_path=None):
         """Guarda la ontología con inferencias"""
         if output_path is None:
             output_path = config.ONTOLOGY_DIR / "SmartCompareMarket_inferred.owl"
-        
+
         self.onto.save(file=str(output_path))
-        print(f"💾 Ontología inferida guardada en: {output_path}")
+        print(f"[SAVE] Ontologia inferida guardada en: {output_path}")
 
 # Singleton global
 _ontology_loader = None

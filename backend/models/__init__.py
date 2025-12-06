@@ -16,7 +16,8 @@ from .product import (
     ProductResponse,
     ProductListResponse,
     ProductRelation,
-    RelationshipResponse
+    RelationshipResponse,
+    SingleProductResponse
 )
 
 # Comparison schemas
@@ -46,6 +47,7 @@ __all__ = [
     "ProductListResponse",
     "ProductRelation",
     "RelationshipResponse",
+    "SingleProductResponse",
     # Comparison
     "CompareRequest",
     "ComparisonResponse",

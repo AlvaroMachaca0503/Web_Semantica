@@ -11,6 +11,34 @@ class ProductService:
     
     def __init__(self):
         self.onto = get_ontology()
+        self._load_images()
+    
+    def _load_images(self):
+        """Carga el mapeo de imágenes"""
+        import json
+        try:
+            images_path = Path(__file__).parent.parent / "data" / "product_images.json"
+            if images_path.exists():
+                with open(images_path, "r") as f:
+                    self.product_images = json.load(f)
+            else:
+                self.product_images = {}
+        except Exception as e:
+            print(f"Error loading images: {e}")
+            self.product_images = {}
+
+    def _inject_image(self, product_dict):
+        """Inyecta la URL de la imagen en las propiedades del producto"""
+        if not product_dict:
+            return product_dict
+            
+        product_id = product_dict.get("id")
+        if product_id and product_id in self.product_images:
+            if "properties" not in product_dict:
+                product_dict["properties"] = {}
+            product_dict["properties"]["imagenUrl"] = self.product_images[product_id]
+        
+        return product_dict
     
     def get_all_products(self):
         """Obtiene todos los productos"""
@@ -26,7 +54,8 @@ class ProductService:
         
         products = []
         for product in list(producto_class.instances()):
-            products.append(individual_to_dict(product))
+            p_dict = individual_to_dict(product)
+            products.append(self._inject_image(p_dict))
         
         return products
     
@@ -36,7 +65,8 @@ class ProductService:
         product_id_lower = product_id.lower()
         for ind in list(self.onto.individuals()):
             if ind.name and ind.name.lower() == product_id_lower:
-                return individual_to_dict(ind)
+                p_dict = individual_to_dict(ind)
+                return self._inject_image(p_dict)
         
         return None
     

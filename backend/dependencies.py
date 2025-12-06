@@ -11,10 +11,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from ontology.loader import get_ontology
 from reasoning.inference_engine import InferenceEngine
+from reasoning.product_classifier import ProductClassifier
 from services.product_service import ProductService
 from services.comparison_service import ComparisonService
+from services.equivalence_service import EquivalenceService
 from sparql.queries import SPARQLQueries
 from sparql.filters import SPARQLFilters
+from sparql.market_analysis import MarketAnalysis
 from reasoning.swrl_engine import SWRLEngine
 
 
@@ -43,6 +46,12 @@ def get_comparison_service() -> ComparisonService:
     return ComparisonService()
 
 
+@lru_cache()
+def get_equivalence_service() -> EquivalenceService:
+    """Dependency para EquivalenceService"""
+    return EquivalenceService()
+
+
 # ==================== SPARQL ====================
 
 @lru_cache()
@@ -55,6 +64,12 @@ def get_sparql_queries() -> SPARQLQueries:
 def get_sparql_filters() -> SPARQLFilters:
     """Dependency para SPARQLFilters"""
     return SPARQLFilters()
+
+
+@lru_cache()
+def get_market_analysis() -> MarketAnalysis:
+    """Dependency para MarketAnalysis"""
+    return MarketAnalysis()
 
 
 # ==================== Reasoning ====================
@@ -70,6 +85,12 @@ def get_inference_engine() -> InferenceEngine:
 def get_swrl_engine() -> SWRLEngine:
     """Dependency para SWRLEngine"""
     return SWRLEngine()
+
+
+@lru_cache()
+def get_product_classifier() -> ProductClassifier:
+    """Dependency para ProductClassifier"""
+    return ProductClassifier()
 
 
 # ==================== Helpers para Testing ====================
