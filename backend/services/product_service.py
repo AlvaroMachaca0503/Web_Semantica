@@ -84,7 +84,8 @@ class ProductService:
         
         products = []
         for product in list(category_class.instances()):
-            products.append(individual_to_dict(product))
+            p_dict = individual_to_dict(product)
+            products.append(self._inject_image(p_dict))
         
         return products
     

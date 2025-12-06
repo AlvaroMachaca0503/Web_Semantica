@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.get(
-    '/validation/product/{product_id}',
+    '/validate/product/{product_id}',
     summary="Validar producto individual",
     description="""
     Valida la consistencia de especificaciones de un producto específico.
@@ -27,7 +27,7 @@ router = APIRouter()
     
     **Ejemplo:**
     ```
-    GET /api/v1/validation/product/iPhone15_Barato
+    GET /api/v1/validate/product/iPhone15_Barato
     ```
     """,
     responses={
@@ -54,7 +54,7 @@ async def validate_product(product_id: str):
 
 
 @router.get(
-    '/validation/all',
+    '/validate/all',
     summary="Validar todos los productos",
     description="""
     Ejecuta validación de consistencia en todos los productos del catálogo.
@@ -77,7 +77,7 @@ async def validate_all_products():
 
 
 @router.get(
-    '/validation/summary',
+    '/validate/summary',
     summary="Resumen de validación",
     description="""
     Retorna un resumen ejecutivo de la validación sin detalles.

@@ -136,9 +136,6 @@ curl http://localhost:5000/api/v1/products | grep -A 10 "Laptop_Dell_XPS"
 ```
 
 
-
----
-
 ### **REQUISITO 4: Motor de comparación que utilice razonamiento para generar tablas inteligentes**
 
 #### ✅ **CUMPLE COMPLETAMENTE**
@@ -193,6 +190,7 @@ curl -X POST http://localhost:5000/api/v1/compare \
 ---
 
 ### **REQUISITO 5: Interfaz de búsqueda con filtros semánticos avanzados**
+
 
 #### ✅ **CUMPLE COMPLETAMENTE**
 
@@ -394,9 +392,6 @@ curl http://localhost:5000/api/v1/swrl/gaming-laptops
 # Debe retornar 3 laptops con RAM >= 16GB
 ```
 
-
-
----
 
 ### **REQUISITO 9: Validación de consistencia de especificaciones de productos**
 

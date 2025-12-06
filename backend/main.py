@@ -117,7 +117,13 @@ def create_app() -> FastAPI:
                 "swrl_positive_reviews": "/api/v1/swrl/positive-reviews",
                 "swrl_negative_reviews": "/api/v1/swrl/negative-reviews",
                 "compare": "/api/v1/compare",
-                "search": "/api/v1/search"
+                "search": "/api/v1/search",
+                "validate_all": "/api/v1/validate/all",
+                "validate_product": "/api/v1/validate/product/{id}",
+                "recommendations": "/api/v1/recommendations",
+                "recommendations_quick": "/api/v1/recommendations/quick",
+                "equivalences": "/api/v1/equivalences",
+                "market_analysis": "/api/v1/market/analysis"
             }
         }
     
