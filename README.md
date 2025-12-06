@@ -94,7 +94,6 @@ curl http://localhost:5000/api/v1/products/iPhone15_Barato/relationships
 # Respuesta incluirá sección "similar" con productos equivalentes
 ```
 
-**Screenshot sugerido**: Respuesta JSON mostrando productos similares.
 
 ---
 
@@ -560,7 +559,6 @@ npm run dev
 4. Tab "Data properties" → mostrar `tieneRAM_GB`, `tienePrecio`, etc.
 5. Tab "Individuals" → mostrar `Laptop_Dell_XPS` con sus propiedades
 
-**Screenshot clave**: Jerarquía de clases en Protégé.
 
 ---
 
@@ -574,7 +572,6 @@ npm run dev
 4. En navegador → `http://localhost:5000/api/v1/products/Laptop_Dell_XPS`
 5. **Verificar**: En array `"types"` aparece `"LaptopGamer"` (inferido automáticamente)
 
-**Screenshot clave**: JSON mostrando tipo "LaptopGamer" inferido.
 
 **Explicar**: "La regla SWRL detecta automáticamente que si una Laptop tiene RAM ≥ 16GB, debe clasificarse como LaptopGamer. El razonador Pellet aplica esta regla y el sistema lo refleja en todos los endpoints."
 
@@ -600,7 +597,6 @@ curl -X POST http://localhost:5000/api/v1/compare \
   -d '{"products": ["Laptop_Dell_XPS", "Laptop_MSI_Gaming"]}'
 ```
 
-**Screenshot clave**: Vista de comparación con ganador y tabla.
 
 **Explicar sistema de scoring**: "El sistema calcula un score de 0-100 considerando 9 factores ponderados: batería (20%), calificación (18%), precio (14%), etc. Además agrega bonus si las reglas SWRL determinan que un producto es mejor opción."
 
@@ -624,7 +620,6 @@ curl "http://localhost:5000/api/v1/search?category=Laptop&min_price=1000&max_pri
 
 4. **Explicar**: "Internamente ejecuta una consulta SPARQL sobre el grafo RDF de la ontología con filtros semánticos."
 
-**Screenshot clave**: Resultados de búsqueda filtrada.
 
 ---
 
@@ -649,7 +644,6 @@ curl -X POST http://localhost:5000/api/v1/recommendations \
   -d '{"budget": 1500, "preferred_category": "Laptop", "min_ram": 16, "min_rating": 4.5}'
 ```
 
-**Screenshot clave**: Lista de recomendaciones con scores y razones.
 
 **Explicar**: "El sistema calcula un score personalizado basado en el perfil del usuario. Usa razonamiento SWRL para dar bonus a laptops gaming detectadas automáticamente."
 
@@ -680,7 +674,6 @@ curl http://localhost:5000/api/v1/validate/all
 }
 ```
 
-**Screenshot clave**: JSON de validación con errores y advertencias.
 
 ---
 
@@ -699,7 +692,6 @@ curl http://localhost:5000/api/v1/products/iPhone15_Barato/relationships
    - `similar`: Productos equivalentes
    - `better_than`: Relaciones esMejorOpcionQue
 
-**Screenshot clave**: JSON mostrando relaciones del producto.
 
 ---
 
